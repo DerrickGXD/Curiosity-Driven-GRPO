@@ -1,0 +1,56 @@
+[
+    {
+        "problem": "Find $a$ if $a$ and $b$ are integers such that $x^2 - x - 1$ is a factor of $ax^{17} + bx^{16} + 1$.",
+        "solution": "We can long divide and search for a pattern; then the remainder would be set to zero to solve for $a$. Writing out a few examples quickly shows us that the remainders after each subtraction follow the Fibonacci sequence. Carrying out this pattern, we find that the remainder is \\[(F_{16}b + F_{17}a)x + F_{15}b + F_{16}a + 1 = 0.\\] Since the coefficient of $x$ must be zero, this gives us two equations, $F_{16}b + F_{17}a = 0$ and $F_{15}b + F_{16}a + 1 = 0$. Solving these two as above, we get that $a = \\boxed{987}$.\n There are various similar solutions which yield the same pattern, such as repeated substitution of $x^2 = x + 1$ into the polynomial with a higher degree, as shown in Solution 6.",
+        "answer": "987",
+        "year": 1988,
+        "aime_number": 1,
+        "problem_number": 13,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Let $v$ and $w$ be distinct, randomly chosen roots of the equation $z^{1997}-1=0$. Let $\\frac{m}{n}$ be the probability that $\\sqrt{2+\\sqrt{3}}\\le\\left|v+w\\right|$, where $m$ and $n$ are relatively prime positive integers. Find $m+n$.",
+        "solution": "Since $z^{1997}=1$, the roots will have magnitude $1$. Thus, the roots can be written as $\\cos(\\theta)+i\\sin(\\theta)$ and $\\cos(\\omega)+i\\sin(\\omega)$ for some angles $\\theta$ and $\\omega$. We rewrite the requirement as $\\sqrt{2+\\sqrt3}\\le|\\cos(\\theta)+\\cos(\\omega)+i\\sin(\\theta)+i\\sin(\\omega)|$, which can now be easily manipulated to $2+\\sqrt{3}\\le(\\cos(\\theta)+\\cos(\\omega))^2+(\\sin(\\theta)+\\sin(\\omega))^2$.\n WLOG, let $\\theta = 0$. Thus, our inequality becomes $2+\\sqrt{3}\\le(1+\\cos(\\omega))^2+(\\sin(\\omega))^2$, $2+\\sqrt{3}\\le2+2\\cos(\\omega)$, and finally $\\cos(\\omega)\\ge\\frac{\\sqrt{3}}{2}$. Obviously, $\\cos(\\frac{\\pi}{6})=\\frac{\\sqrt{3}}{2}$, and thus it follows that, on either side of a given point, $\\frac{1997}{12}\\approx166$ points will work. The probability is $\\frac{166\\times2}{1996} = \\frac{83}{499}$, and thus our requested sum is $\\boxed{582}$ ~SigmaPiE",
+        "answer": "582",
+        "year": 1997,
+        "aime_number": 1,
+        "problem_number": 14,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Consider the paper triangle whose vertices are $(0,0), (34,0),$ and $(16,24).$ The vertices of its midpoint triangle are the midpoints of its sides. A triangular pyramid is formed by folding the triangle along the sides of its midpoint triangle. What is the volume of this pyramid?",
+        "solution": "The formed tetrahedron has pairwise parallel planar and oppositely equal length ($4\\sqrt{13},15,17$) edges and can be inscribed in a parallelepiped (rectangular box) with the six tetrahedral edges as non-intersecting diagonals of the box faces. Let the edge lengths of the parallelepiped be $p,q,r$ and solve (by Pythagoras)\n$p^2+q^2=4^2\\cdot{13}$\n$q^2+r^2=15^2$\n$r^2+p^2=17^2$\n to find that $(p^2,q^2,r^2)=(153,136,72)=(3^2\\cdot{17},2^3\\cdot{17},2^3\\cdot{3^2}).$\n Use the fact that the ratio of volumes between an inscribed tetrahedron and its circumscribing parallelepiped is $\\tfrac{1}{3}$ and then the volume is\n$\\tfrac{1}{3}pqr=\\tfrac{1}{3}\\sqrt{2^6\\cdot{3^4}\\cdot{17^2}}=\\boxed{408}$\n Solution by D. Adrian Tanner",
+        "answer": "408",
+        "year": 1999,
+        "aime_number": 1,
+        "problem_number": 15,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Let $w_1$ and $w_2$ denote the circles $x^2+y^2+10x-24y-87=0$ and $x^2 +y^2-10x-24y+153=0,$ respectively. Let $m$ be the smallest positive value of $a$ for which the line $y=ax$ contains the center of a circle that is externally tangent to $w_2$ and internally tangent to $w_1.$ Given that $m^2=\\frac pq,$ where $p$ and $q$ are relatively prime integers, find $p+q.$",
+        "solution": "We use the same reflection as in Solution 2. As $OF_1'=OF_2=13$, we know that $\\triangle OF_1'F_2$ is isosceles. Hence $\\angle F_2F_1'O=\\angle F_1'F_2O$. But by symmetry, we also know that $\\angle OF_1T=\\angle F_2F_1'O$. Hence $\\angle OF_1T=\\angle F_1'F_2O$. In particular, as $\\angle OF_1T=\\angle OF_2T$, this implies that $O, F_1, F_2$, and $T$ are concyclic.\n Let $X$ be the intersection of $F_2F_1'$ with the $x$-axis. As $F_1F_2$ is parallel to the $x$-axis, we know that \\[\\angle TXO=180-\\angle F_1F_2T.\\tag{1}\\] But \\[180-\\angle F_1F_2T=\\angle F_2F_1T+\\angle F_1TF_2.\\tag{2}\\] By the fact that $OF_1F_2T$ is cyclic, \\[\\angle F_2F_1T=\\angle F_2OT\\qquad\\text{and}\\qquad \\angle F_1TF_2=\\angle F_1OF_2.\\tag{3}\\] Therefore, combining (1), (2), and (3), we find that \\[\\angle TXO=\\angle F_2OT+\\angle F_1OF_2=\\angle F_1OT.\\tag{4}\\]\n By symmetry, we also know that \\[\\angle F_1TO=\\angle OTF_1'.\\tag{5}\\] Therefore, (4) and (5) show by AA similarity that $\\triangle F_1OT\\sim \\triangle OXT$. Therefore, $\\angle XOT=\\angle OF_1T$.\n Now as $OF_1=OF_2'=13$, we know that $\\triangle OF_1F_2'$ is isosceles, and as $F_1F_2'=20$, we can drop an altitude to $F_1F_2'$ to easily find that $\\tan \\angle OF_1T=\\sqrt{69}/10$. Therefore, $\\tan\\angle XOT$, which is the desired slope, must also be $\\sqrt{69}/10$. As before, we conclude that the answer is $\\boxed{169}$.",
+        "answer": "169",
+        "year": 2005,
+        "aime_number": 2,
+        "problem_number": 15,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Given that $x, y,$ and $z$ are real numbers that satisfy: \\begin{align*} x &= \\sqrt{y^2-\\frac{1}{16}}+\\sqrt{z^2-\\frac{1}{16}}, \\\\ y &= \\sqrt{z^2-\\frac{1}{25}}+\\sqrt{x^2-\\frac{1}{25}}, \\\\ z &= \\sqrt{x^2 - \\frac 1{36}}+\\sqrt{y^2-\\frac 1{36}}, \\end{align*} and that $x+y+z = \\frac{m}{\\sqrt{n}},$ where $m$ and $n$ are positive integers and $n$ is not divisible by the square of any prime, find $m+n.$",
+        "solution": "Note that none of $x,y,z$ can be zero.\n Each of the equations is in the form \\[a=\\sqrt{b^2-d^2}+\\sqrt{c^2-d^2}\\]\n Isolate a radical and square the equation to get \\[b^2-d^2=a^2-2a\\sqrt{c^2-d^2}+c^2-d^2\\]\n Now cancel, and again isolate the radical, and square the equation to get \\[a^4+b^4+c^4+2a^2c^2-2a^2b^2-2b^2c^2=4a^2c^2-4a^2d^2\\]\n Rearranging gives \\[a^4+b^4+c^4=2a^2b^2+2a^2c^2+2b^2c^2-4a^2d^2\\]\n Now note that everything is cyclic but the last term (i.e. $-4a^2d^2$), which implies \\[-4x^2\\cdot\\frac1{16}=-4y^2\\cdot\\frac1{25}=-4z^2\\cdot\\frac1{36}\\]\n Or\n\\[x: y: z=4: 5: 6 \\implies x=\\frac{4y}5 \\textrm{ and } z=\\frac{6y}5\\]\n Plug these values into the middle equation to get \\[\\frac{256y^4+625y^4+1296y^4}{625}=\\frac{800y^4}{625}+\\frac{1800y^4}{625}+\\frac{1152y^4}{625}-\\frac{100y^2}{625}\\]\n Simplifying gives \\[1575y^4=100y^2 \\textrm{ but } y \\neq 0 \\implies y^2=\\frac4{63} \\textrm{ or } y=\\frac2{3\\sqrt7}\\]\n Substituting the value of $y$ for $x$ and $z$ gives \\[x+y+z = \\frac{4y+5y+6y}5 = 3y = 3 \\cdot \\frac{2}{3\\sqrt7} = \\frac{2}{\\sqrt7}\\]\n And thus the answer is $\\boxed{009}$\n ~phoenixfire",
+        "answer": "9",
+        "year": 2006,
+        "aime_number": 2,
+        "problem_number": 15,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Let $P(x) = x^2 - 3x - 9$. A real number $x$ is chosen at random from the interval $5 \\le x \\le 15$. The probability that $\\lfloor\\sqrt{P(x)}\\rfloor = \\sqrt{P(\\lfloor x \\rfloor)}$ is equal to $\\frac{\\sqrt{a} + \\sqrt{b} + \\sqrt{c} - d}{e}$ , where $a$, $b$, $c$, $d$, and $e$ are positive integers. Find $a + b + c + d + e$.",
+        "solution": "Note that all the \"bounds\" have to be less than the number+1, otherwise it wouldn't fit the answer format. Therefore, the answer is $\\frac{3*3+\\sqrt{9+4(4+9)}-10+\\sqrt{9+4(16+9)}-12+\\sqrt{9+4(144+9)}}{20} \\implies \\boxed{850}$\n ~Lcz",
+        "answer": "850",
+        "year": 2011,
+        "aime_number": 2,
+        "problem_number": 15,
+        "difficulty": 6.0
+    }
+]

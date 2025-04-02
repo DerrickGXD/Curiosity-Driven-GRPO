@@ -1,0 +1,62 @@
+[
+  {
+    "problem": "Let $x$, $y$ and $z$ all exceed $1$ and let $w$ be a positive number such that $\\log_x w = 24$, $\\log_y w = 40$ and $\\log_{xyz} w = 12$. Find $\\log_z w$.",
+    "solution": "Converting all of the logarithms to exponentials gives $x^{24} = w, y^{40} =w,$ and $x^{12}y^{12}z^{12}=w.$ Thus, we have $y^{40} = x^{24} \\Rightarrow z^3=y^2.$ We are looking for $\\log_z w,$ which by substitution, is $\\log_{y^{\\frac{2}{3}}} y^{40} = 40 \\div \\frac{2}{3} =\\boxed{60}.$\n ~coolmath2017\n ~Lucas",
+    "answer": "60",
+    "year": 1983,
+    "aime_number": 1,
+    "problem_number": 1,
+    "difficulty": 4.0,
+    "Generation": {
+      "response": "The reasoning pattern involves converting logarithms to a common base, using properties of logarithms to express the product in terms of individual logs, and solving for the unknown log.\n\nReasoning Pattern: SA → CoT → OST\n\n1. System Analysis (SA): Convert all logarithms to a common base (base w) using the change of base formula and express the product xyz in terms of individual logs.\n2. Chain-of-Thought (CoT): Apply logarithmic properties to express log_w(xyz) as the sum of log_w(x), log_w(y), and log_w(z).\n3. One-Step Thought (OST): Solve the resulting equation for log_w(z) and then find log_z(w) using the reciprocal relationship.\n\nAnswer: 60"
+    }
+  },
+  {
+    "problem": "Let $f(x)=|x-p|+|x-15|+|x-p-15|$, where $0 < p < 15$. Determine the minimum value taken by $f(x)$ for $x$ in the interval $p \\leq x\\leq15$.",
+    "solution": "It is best to get rid of the absolute values first.\n Under the given circumstances, we notice that $|x-p|=x-p$, $|x-15|=15-x$, and $|x-p-15|=15+p-x$.\n Adding these together, we find that the sum is equal to $30-x$, which attains its minimum value (on the given interval $p \\leq x \\leq 15$) when $x=15$, giving a minimum of $\\boxed{015}$.",
+    "answer": "15",
+    "year": 1983,
+    "aime_number": 1,
+    "problem_number": 2,
+    "difficulty": 2.0,
+    "Generation": {
+      "response": "The problem involves finding the minimum value of a function defined by the sum of three absolute value expressions within a specific interval. By analyzing each absolute value term and simplifying the function within the given interval, we determine that the function is linear and decreasing. Therefore, the minimum occurs at the right endpoint of the interval.\n\n**Reasoning Pattern:**\n1. **System Analysis (SA):** Identify the structure of the function and the interval of interest.\n2. **Chain-of-Thought (CoT):** Simplify each absolute value term within the interval to express the function in a linear form.\n3. **One-Step Thought (OST):** Recognize the linear function's behavior and determine the minimum occurs at the interval's endpoint.\n\n**Answer:** The minimum value of \\( f(x) \\) in the interval \\( [p, 15] \\) is \\( 15 \\)."
+    }
+  },
+  {
+    "problem": "What is the product of the real roots of the equation $x^2 + 18x + 30 = 2 \\sqrt{x^2 + 18x + 45}$?",
+    "solution": "Begin by completing the square on both sides of the equation, which gives \\[(x+9)^2-51=2\\sqrt{(x+3)(x+15)}\\] Now by substituting $y=x+9$, we get $y^2-51=2\\sqrt{(y-6)(y+6)}$, or \\[y^4-106y^2+2745=0\\] The solutions in $y$ are then \\[y=x+9=\\pm3\\sqrt{5},\\pm\\sqrt{61}\\] Turns out, $\\pm3\\sqrt{5}$ are a pair of extraneous solutions. Thus, our answer is then \\[\\left(\\sqrt{61}-9\\right)\\left(-\\sqrt{61}-9\\right)=81-61=\\boxed{020}\\] By difference of squares.",
+    "answer": "20",
+    "year": 1983,
+    "aime_number": 1,
+    "problem_number": 3,
+    "difficulty": 4.0,
+    "Generation": {
+      "response": "The problem involves solving an equation and finding the product of its real roots. The reasoning pattern involves substitution to simplify the equation, solving a quadratic, checking for extraneous solutions, and then computing the product of the valid roots.\n\nReasoning Pattern: SA → DC → CoT → OST\n\n1. System Analysis (SA): The equation is analyzed to identify a substitution that simplifies the expression, recognizing the structure of the equation and the need to isolate variables.\n2. Divide and Conquer (DC): The problem is broken down by substituting y = x² + 18x, transforming the equation into a more manageable form.\n3. Chain-of-Thought (CoT): The transformed equation is solved using algebraic methods, specifically factoring the quadratic equation and solving for y.\n4. One-Step Thought (OST): The solutions for y are substituted back into the original equation, and the validity of each root is checked to eliminate extraneous solutions. Finally, the product of the valid roots is computed.\n\nAnswer: 20"
+    }
+  },
+  {
+    "problem": "A machine-shop cutting tool has the shape of a notched circle, as shown. The radius of the circle is $\\sqrt{50}$ cm, the length of $AB$ is $6$ cm and that of $BC$ is $2$ cm. The angle $ABC$ is a right angle. Find the square of the distance (in centimeters) from $B$ to the center of the circle.\n[asy] size(150); defaultpen(linewidth(0.6)+fontsize(11)); real r=10; pair O=(0,0), A=r*dir(45),B=(A.x,A.y-r); path P=circle(O,r); pair C=intersectionpoint(B--(B.x+r,B.y),P); // Drawing arc instead of full circle //draw(P); draw(arc(O, r, degrees(A), degrees(C))); draw(C--B--A--B); dot(A); dot(B); dot(C); label(\"$A$\",A,NE); label(\"$B$\",B,S); label(\"$C$\",C,SE); [/asy]",
+    "solution": "We use coordinates. Let the circle have center $(0,0)$ and radius $\\sqrt{50}$; this circle has equation $x^2 + y^2 = 50$. Let the coordinates of $B$ be $(a,b)$. We want to find $a^2 + b^2$. $A$ and $C$ with coordinates $(a,b+6)$ and $(a+2,b)$, respectively, both lie on the circle. From this we obtain the system of equations\n$a^2 + (b+6)^2 = 50$\n$(a+2)^2 + b^2 = 50$\n After expanding these terms, we notice by subtracting the first and second equations, we can cancel out $a^2$ and $b^2$. after substituting $a=3b+8$ and plugging back in, we realize that $(a,b)=(-7,-5)$ or $(5,-1)$. Since the first point is out of the circle, we find that $(5,-1)$ is the only relevant answer. This paragraph is written by ~hastapasta.\n Solving, we get $a=5$ and $b=-1$, so the distance is $a^2 + b^2 = \\boxed{026}$.",
+    "answer": "26",
+    "year": 1983,
+    "aime_number": 1,
+    "problem_number": 4,
+    "difficulty": 2.0,
+    "Generation": {
+      "response": "The problem involves finding the square of the distance from point B to the center of a circle with radius √50 cm. By setting up a coordinate system and using the given lengths and right angle, we derived two possible positions for the center. After verifying which position places B inside the circle, we found the correct distance squared to be 26.\n\nReasoning Pattern: SA → CoT → OST\n\n1. System Analysis (SA): We identified the problem involves a circle with a given radius and a right-angled triangle with known side lengths. We set up a coordinate system to model the positions of points A, B, and C.\n\n2. Chain-of-Thought (CoT): We translated the geometric relationships into algebraic equations, considering the coordinates of points A, B, and C. We used the circle's equation and the Pythagorean theorem to form a system of equations.\n\n3. One-Step Thought (OST): We solved the system of equations to find the coordinates of point B, ensuring that point B lies inside the circle. We verified the validity of each solution to determine the correct position of the center.\n\nAnswer: 26"
+    }
+  },
+  {
+    "problem": "Suppose that the sum of the squares of two complex numbers $x$ and $y$ is $7$ and the sum of the cubes is $10$. What is the largest real value that $x + y$ can have?",
+    "solution": "Begin by assuming that $x$ and $y$ are roots of some polynomial of the form $w^2+bw+c$, such that by Vieta's Formulæ and some algebra (left as an exercise to the reader), $b^2-2c=7$ and $3bc-b^3=10$. Substituting $c=\\frac{b^2-7}{2}$, we deduce that $b^3-21b-20=0$, whose roots are $-4$, $-1$, and $5$. Since $-b$ is the sum of the roots and is maximized when $b=-4$, the answer is $-(-4)=\\boxed{004}$.",
+    "answer": "4",
+    "year": 1983,
+    "aime_number": 1,
+    "problem_number": 5,
+    "difficulty": 4.0,
+    "Generation": {
+      "response": "The reasoning pattern involves using algebraic identities to express the given conditions in terms of sums and products, then solving the resulting equations to find the maximum value of x + y.\n\nReasoning Pattern: SA → CoT → OST\n\n1. System Analysis (SA): Identify the given conditions and set up equations based on the problem constraints.\n2. Chain-of-Thought (CoT): Use algebraic identities to express the sum of cubes and squares in terms of x + y and xy, then solve the resulting system of equations.\n3. One-Step Thought (OST): Compute the necessary numerical values explicitly to obtain the final result."
+    }
+  }
+]

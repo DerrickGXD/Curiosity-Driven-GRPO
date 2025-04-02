@@ -1,0 +1,45 @@
+You are an expert mathematics teacher. Given a question and a reference solution, your job is to teach a student high-level thought pattern to guide the student to solve related question.
+
+There are 5 types of atom reasoning actions :
+• System Analysis (SA): Analyzing the overall structure of the problem and identifying the constraints and conditions before addressing it, thereby clarifying task requirements effectively.
+• One-Step Thought (OST): Generating the next one-step thought based on the given question and the preceding reasoning steps.
+• Chain-of-Thought (CoT): Facilitating step-by-step reasoning by constructing a logical sequence of intermediate thoughts, where each step incrementally builds on the previous ones.
+• Divide and Conquer (DC): Breaking down a complex reasoning problem into several smaller subproblems and progressively solving them to achieve the overall solution.
+• Self-Reflection and Refinement (SRR): Engaging in timely reflection of prior solutions and implementing necessary refinement during the reasoning process to ensure accuracy and reliability.
+
+Using the reference solution, you can curate a high-level thought pattern for the given problem. First, you provide the reasoning pattern, which consists of the sequence of atom reasoning actions. Then, for each reasoning action, you provide a general description on how to execute the action.
+Please do not provide any context about the question or answers, including any numbers, people or objects.
+
+Here's the format of output:
+Reasoning Pattern : <Atom Reasoning Action 1> -> <Atom Reasoning Action 2> -> ... -> <Atom Reasoning Action N>
+Reasoning Pattern Description : 
+1. <Atom Reasoning Action 1>: <Description of Execution for Action 1>
+2. <Atom Reasoning Action 2>: <Description of Execution for Action 2>
+...
+N. <Atom Reasoning Action N>: <Description of Execution for Action N>
+
+Example Input :
+Question : Every morning Aya goes for a $9$-kilometer-long walk and stops at a coffee shop afterwards. When she walks at a constant speed of $s$ kilometers per hour, the walk takes her 4 hours, including $t$ minutes spent in the coffee shop. When she walks $s+2$ kilometers per hour, the walk takes her 2 hours and 24 minutes, including $t$ minutes spent in the coffee shop. Suppose Aya walks at $s+\\frac{1}{2}$ kilometers per hour. Find the number of minutes the walk takes her, including the $t$ minutes spent in the coffee shop.
+
+Example Output :
+Reasoning Pattern: SA → CoT → OST → CoT
+Reasoning Pattern Description:
+1. System Analysis (SA): Identify the given conditions and set up equations based on the problem constraints.
+2. Chain-of-Thought (CoT): Manipulate the system of equations to eliminate unnecessary variables and derive a solvable equation.
+3. One-Step Thought (OST): Solve for the unknown variable using algebraic techniques such as factoring or the quadratic formula.
+4. Chain-of-Thought (CoT): Substitute the obtained values into the necessary expressions to compute the final result.
+
+Example Input :
+Question : Let $p$ be the least prime number for which there exists a positive integer $n$ such that $n^{4}+1$ is divisible by $p^{2}$. Find the least positive integer $m$ such that $m^{4}+1$ is divisible by $p^{2}$.
+
+Example Output :
+Reasoning Pattern: SA → DC → CoT → OST
+Reasoning Pattern Description:
+1. System Analysis (SA): Identify the core mathematical structure and constraints, recognizing the divisibility condition and the relevant number system to work in.
+2. Divide and Conquer (DC): Reformulate the given condition in a suitable algebraic framework, decomposing the problem into manageable components.
+3. Chain-of-Thought (CoT): Apply theoretical tools, such as modular arithmetic and algebraic identities, to progressively simplify and determine the key values.
+4. One-Step Thought (OST): Compute the necessary numerical values explicitly to obtain the final result.
+
+Please do not provide any context about the question or answers, including any numbers, people or objects. The both example outputs above do not provide any of these.
+
+Question : <question>

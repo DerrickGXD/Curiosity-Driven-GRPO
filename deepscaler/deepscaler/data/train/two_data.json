@@ -1,0 +1,20 @@
+[
+  {
+    "problem": "Let $A$ be an acute angle such that $\\tan A = 2 \\cos A.$ Find the number of positive integers $n$ less than or equal to $1000$ such that $\\sec^n A + \\tan^n A$ is a positive integer whose units digit is $9.$",
+    "solution": "\\[\\tan A = 2 \\cos A \\implies \\sin A = 2 \\cos^2 A \\implies \\sin^2 A + \\cos^2 A = 4 \\cos^4 A + \\cos^2 A = 1\\] \\[\\implies \\cos^2 A = \\frac {\\sqrt {17} - 1}{8}.\\] \\[c_n = \\sec^n A + \\tan^n A = \\frac {1}{\\cos^n A} + 2^n \\cos^n A = (4\\cos^2 A +1)^{\\frac {n}{2}}+(4 \\cos^2 A)^{\\frac {n}{2}} =\\] \\[= \\left(\\frac {\\sqrt {17} + 1}{2}\\right)^{\\frac {n}{2}}+ \\left(\\frac {\\sqrt {17} - 1}{2}\\right)^{\\frac {n}{2}}.\\]\n It is clear, that $c_n$ is not integer if $n \\ne 4k, k > 0.$\n Denote $x = \\frac {\\sqrt {17} + 1}{2}, y = \\frac {\\sqrt {17} - 1}{2} \\implies$ \\[x \\cdot y = 4, x + y = \\sqrt{17}, x - y = 1 \\implies x^2 + y^2 = (x - y)^2 + 2xy = 9 = c_4.\\]\n\\[c_8 = x^4 + y^4 = (x^2 + y^2)^2 - 2x^2 y^2 = 9^2 - 2 \\cdot 16 = 49.\\] \\[c_{4k+4} = x^{4k+4} + y^{4k+4} = (x^{4k} + y^{4k})(x^2+y^2)- (x^2 y^2)(x^{4k-2}+y^{4k-2}) = 9 c_{4k}- 16 c_{4k – 4} \\implies\\] \\[c_{12} = 9 c_8 - 16 c_4 = 9 \\cdot 49 - 16 \\cdot 9 = 9 \\cdot 33 = 297.\\] \\[c_{16} = 9 c_{12} - 16 c_8 = 9 \\cdot 297 - 16 \\cdot 49 = 1889.\\] \\[c_{12m + 4} \\pmod{10} = 9 \\cdot c_{12m} \\pmod{10} - 16 \\pmod{10} \\cdot c_{12m - 4} \\pmod{10} =\\] \\[= (9 \\cdot 7 - 6 \\cdot 9) \\pmod{10} = (3 - 4) \\pmod{10} = 9.\\] \\[c_{12m + 8}\\pmod{10} = 9 \\cdot c_{12m+4} \\pmod{10} - 16 \\pmod{10} \\cdot c_{12m } \\pmod{10} =\\] \\[= (9 \\cdot 9 - 6 \\cdot 7) \\pmod{10} = (1 - 2)\\pmod{10} = 9.\\] \\[c_{12m + 12} \\pmod{10} = 9 \\cdot c_{12m + 8} \\pmod{10} - 16 \\pmod{10} \\cdot c_{12m + 4} \\pmod{10} =\\] \\[= (9 \\cdot 9 - 6 \\cdot 9) \\pmod{10} = (1 - 4) \\pmod{10} = 7 \\implies\\]\n The condition is satisfied iff $n = 12 k + 4$ or $n = 12k + 8.$\n If $n \\le N$ then the number of possible n is $\\left\\lfloor \\frac{N}{4} \\right\\rfloor - \\left\\lfloor \\frac{N}{12} \\right\\rfloor.$\n For $N = 1000$ we get $\\left\\lfloor \\frac{1000}{4} \\right\\rfloor - \\left\\lfloor \\frac{1000}{12} \\right\\rfloor = 250 - 83 = \\boxed{167}.$\nvladimir.shelomovskii@gmail.com, vvsss\n ~MathProblemSolvingSkills.com",
+    "answer": "167",
+    "year": 2023,
+    "aime_number": 2,
+    "problem_number": 13,
+    "difficulty": 6.0
+  },
+  {
+    "problem": "Each vertex of a regular dodecagon ($12$-gon) is to be colored either red or blue, and thus there are $2^{12}$ possible colorings. Find the number of these colorings with the property that no four vertices colored the same color are the four vertices of a rectangle.",
+    "solution": "Note that the condition is equivalent to stating that there are no 2 pairs of oppositely spaced vertices with the same color.\n Case 1: There are no pairs. This yields $2$ options for each vertices 1-6, and the remaining vertices 7-12 are set, yielding $2^6=64$ cases.\n Case 2: There is one pair. Again start with 2 options for each vertex in 1-6, but now multiply by 6 since there are 6 possibilities for which pair can have the same color assigned instead of the opposite. Thus, the cases are: $2^6*6=384$\n case 3: There are two pairs, but oppositely colored. Start with $2^6$ for assigning 1-6, then multiply by 6C2=15 for assigning which have repeated colors. Divide by 2 due to half the cases having the same colored opposites. $2^6*15/2=480$\n It is apparent that no other cases exist, as more pairs would force there to be 2 pairs of same colored oppositely spaced vertices with the same color. Thus, the answer is: $64+384+480=\\boxed{928}$\n ~SAHANWIJETUNGA",
+    "answer": "928",
+    "year": 2023,
+    "aime_number": 2,
+    "problem_number": 7,
+    "difficulty": 6.0
+  }
+]
