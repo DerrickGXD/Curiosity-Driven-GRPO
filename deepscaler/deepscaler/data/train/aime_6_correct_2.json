@@ -1,0 +1,164 @@
+[
+    {
+        "problem": "The shortest distances between an interior diagonal of a rectangular parallelepiped, $P$, and the edges it does not meet are $2\\sqrt{5}$, $\\frac{30}{\\sqrt{13}}$, and $\\frac{15}{\\sqrt{10}}$. Determine the volume of $P$.",
+        "solution": "In the above diagram, we focus on the line that appears closest and is parallel to $BC$. All the blue lines are perpendicular lines to $BC$ and their other points are on $AB$, the main diagonal. The green lines are projections of the blue lines onto the bottom face; all of the green lines originate in the corner and reach out to $AC$, and have the same lengths as their corresponding blue lines. So we want to find the shortest distance between $AC$ and that corner, which is $\\frac {wl}{\\sqrt {w^2 + l^2}}$.\n So we have: \\[\\frac {lw}{\\sqrt {l^2 + w^2}} = \\frac {10}{\\sqrt {5}}\\] \\[\\frac {hw}{\\sqrt {h^2 + w^2}} = \\frac {30}{\\sqrt {13}}\\] \\[\\frac {hl}{\\sqrt {h^2 + l^2}} = \\frac {15}{\\sqrt {10}}\\]\n Notice the familiar roots: $\\sqrt {5}$, $\\sqrt {13}$, $\\sqrt {10}$, which are $\\sqrt {1^2 + 2^2}$, $\\sqrt {2^2 + 3^2}$, $\\sqrt {1^2 + 3^2}$, respectively. (This would give us the guess that the sides are of the ratio 1:2:3, but let's provide the complete solution.)\n\\[\\frac {l^2w^2}{l^2 + w^2} = \\frac {1}{\\frac {1}{l^2} + \\frac {1}{w^2}} = 20\\] \\[\\frac {h^2w^2}{h^2 + w^2} = \\frac {1}{\\frac {1}{h^2} + \\frac {1}{w^2}} = \\frac {900}{13}\\] \\[\\frac {h^2l^2}{h^2 + l^2} = \\frac {1}{\\frac {1}{h^2} + \\frac {1}{l^2}} = \\frac {45}{2}\\]\n We invert the above equations to get a system of linear equations in $\\frac {1}{h^2}$, $\\frac {1}{l^2}$, and $\\frac {1}{w^2}$: \\[\\frac {1}{l^2} + \\frac {1}{w^2} = \\frac {45}{900}\\] \\[\\frac {1}{h^2} + \\frac {1}{w^2} = \\frac {13}{900}\\] \\[\\frac {1}{h^2} + \\frac {1}{l^2} = \\frac {40}{900}\\]\n We see that $h = 15$, $l = 5$, $w = 10$. Therefore $V = 5 \\cdot 10 \\cdot 15 = \\boxed{750}$",
+        "answer": "750",
+        "year": 1986,
+        "aime_number": 1,
+        "problem_number": 14,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Let $T = \\{9^k : k ~ \\mbox{is an integer}, 0 \\le k \\le 4000\\}$. Given that $9^{4000}_{}$ has 3817 digits and that its first (leftmost) digit is 9, how many elements of $T_{}^{}$ have 9 as their leftmost digit?",
+        "solution": "Since $9^{4000}$ has 3816 digits more than $9^1$, $4000 - 3816 = \\boxed{184}$ numbers have 9 as their leftmost digits.",
+        "answer": "184",
+        "year": 1990,
+        "aime_number": 1,
+        "problem_number": 13,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "The sides of rectangle $ABCD$ have lengths $10$ and $11$. An equilateral triangle is drawn so that no point of the triangle lies outside $ABCD$. The maximum possible area of such a triangle can be written in the form $p\\sqrt{q}-r$, where $p$, $q$, and $r$ are positive integers, and $q$ is not divisible by the square of any prime number. Find $p+q+r$.",
+        "solution": "Since $\\angle{BAD}=90$ and $\\angle{EAF}=60$, it follows that $\\angle{DAF}+\\angle{BAE}=90-60=30$. Rotate triangle $ADF$ $60$ degrees clockwise. Note that the image of $AF$ is $AE$. Let the image of $D$ be $D'$. Since angles are preserved under rotation, $\\angle{DAF}=\\angle{D'AE}$. It follows that $\\angle{D'AE}+\\angle{BAE}=\\angle{D'AB}=30$. Since $\\angle{ADF}=\\angle{ABE}=90$, it follows that quadrilateral $ABED'$ is cyclic with circumdiameter $AE=s$ and thus circumradius $\\frac{s}{2}$. Let $O$ be its circumcenter. By Inscribed Angles, $\\angle{BOD'}=2\\angle{BAD}=60$. By the definition of circle, $OB=OD'$. It follows that triangle $OBD'$ is equilateral. Therefore, $BD'=r=\\frac{s}{2}$. Applying the Law of Cosines to triangle $ABD'$, $\\frac{s}{2}=\\sqrt{10^2+11^2-(2)(10)(11)(\\cos{30})}$. Squaring and multiplying by $\\sqrt{3}$ yields $\\frac{s^2\\sqrt{3}}{4}=221\\sqrt{3}-330\\implies{p+q+r=221+3+330=\\boxed{554}}$\n -Solution by thecmd999",
+        "answer": "554",
+        "year": 1997,
+        "aime_number": 1,
+        "problem_number": 15,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Circles $\\mathcal{C}_{1}$ and $\\mathcal{C}_{2}$ intersect at two points, one of which is $(9,6)$, and the product of the radii is $68$. The x-axis and the line $y = mx$, where $m > 0$, are tangent to both circles. It is given that $m$ can be written in the form $a\\sqrt {b}/c$, where $a$, $b$, and $c$ are positive integers, $b$ is not divisible by the square of any prime, and $a$ and $c$ are relatively prime. Find $a + b + c$.",
+        "solution": "Let the smaller angle between the $x$-axis and the line $y=mx$ be $\\theta$. Note that the centers of the two circles lie on the angle bisector of the angle between the $x$-axis and the line $y=mx$. Also note that if $(x,y)$ is on said angle bisector, we have that $\\frac{y}{x}=\\tan{\\frac{\\theta}{2}}$. Let $\\tan{\\frac{\\theta}{2}}=m_1$, for convenience. Therefore if $(x,y)$ is on the angle bisector, then $x=\\frac{y}{m_1}$. Now let the centers of the two relevant circles be $(a/m_1 , a)$ and $(b/m_1 , b)$ for some positive reals $a$ and $b$. These two circles are tangent to the $x$-axis, so the radii of the circles are $a$ and $b$ respectively. We know that the point $(9,6)$ is a point on both circles, so we have that\n\\[(9-\\frac{a}{m_1})^2+(6-a)^2=a^2\\]\n\\[(9-\\frac{b}{m_1})^2+(6-b)^2=b^2\\]\n Expanding these and manipulating terms gives\n\\[\\frac{1}{m_1^2}a^2-[(18/m_1)+12]a+117=0\\]\n\\[\\frac{1}{m_1^2}b^2-[(18/m_1)+12]b+117=0\\]\n It follows that $a$ and $b$ are the roots of the quadratic\n\\[\\frac{1}{m_1^2}x^2-[(18/m_1)+12]x+117=0\\]\n It follows from Vieta's Formulas that the product of the roots of this quadratic is $117m_1^2$, but we were also given that the product of the radii was 68. Therefore $68=117m_1^2$, or $m_1^2=\\frac{68}{117}$. Note that the half-angle formula for tangents is\n\\[\\tan{\\frac{\\theta}{2}}=\\sqrt{\\frac{1-\\cos{\\theta}}{1+\\cos{\\theta}}}\\]\n Therefore\n\\[\\frac{68}{117}=\\frac{1-\\cos{\\theta}}{1+\\cos{\\theta}}\\]\n Solving for $\\cos{\\theta}$ gives that $\\cos{\\theta}=\\frac{49}{185}$. It then follows that $\\sin{\\theta}=\\sqrt{1-\\cos^2{\\theta}}=\\frac{12\\sqrt{221}}{185}$.\n It then follows that $m=\\tan{\\theta}=\\frac{12\\sqrt{221}}{49}$. Therefore $a=12$, $b=221$, and $c=49$. The desired answer is then $12+221+49=\\boxed{282}$.",
+        "answer": "282",
+        "year": 2002,
+        "aime_number": 2,
+        "problem_number": 15,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "For each even positive integer $x$, let $g(x)$ denote the greatest power of 2 that divides $x.$ For example, $g(20)=4$ and $g(16)=16.$ For each positive integer $n,$ let $S_n=\\sum_{k=1}^{2^{n-1}}g(2k).$ Find the greatest integer $n$ less than 1000 such that $S_n$ is a perfect square.",
+        "solution": "First note that $g(k)=1$ if $k$ is odd and $2g(k/2)$ if $k$ is even. so $S_n=\\sum_{k=1}^{2^{n-1}}g(2k). = \\sum_{k=1}^{2^{n-1}}2g(k) = 2\\sum_{k=1}^{2^{n-1}}g(k) = 2\\sum_{k=1}^{2^{n-2}} g(2k-1)+g(2k).$ $2k-1$ must be odd so this reduces to $2\\sum_{k=1}^{2^{n-2}}1+g(2k) = 2(2^{n-2}+\\sum_{k=1}^{2^n-2}g(2k)).$ Thus $S_n=2(2^{n-2}+S_{n-1})=2^{n-1}+2S_{n-1}.$ Further noting that $S_0=1$ we can see that $S_n=2^{n-1}\\cdot (n-1)+2^n\\cdot S_0=2^{n-1}\\cdot (n-1)+2^{n-1}\\cdot2=2^{n-1}\\cdot (n+1).$ which is the same as above. To simplify the process of finding the largest square $S_n$ we can note that if $n-1$ is odd then $n+1$ must be exactly divisible by an odd power of $2$. However, this means $n+1$ is even but it cannot be. Thus $n-1$ is even and $n+1$ is a large even square. The largest even square $< 1000$ is $900$ so $n+1= 900 => n= \\boxed{899}$",
+        "answer": "899",
+        "year": 2006,
+        "aime_number": 1,
+        "problem_number": 13,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "A triangular array of squares has one square in the first row, two in the second, and in general, $k$ squares in the $k$th row for $1 \\leq k \\leq 11.$ With the exception of the bottom row, each square rests on two squares in the row immediately below (illustrated in the given diagram). In each square of the eleventh row, a $0$ or a $1$ is placed. Numbers are then placed into the other squares, with the entry for each square being the sum of the entries in the two squares below it. For how many initial distributions of $0$'s and $1$'s in the bottom row is the number in the top square a multiple of $3$?\n[asy] for (int i=0; i<12; ++i){ for (int j=0; j<i; ++j){ //dot((-j+i/2,-i)); draw((-j+i/2,-i)--(-j+i/2+1,-i)--(-j+i/2+1,-i+1)--(-j+i/2,-i+1)--cycle); } } [/asy]",
+        "solution": "Label each of the bottom squares as $x_0, x_1 \\ldots x_9, x_{10}$.\n Through induction, we can find that the top square is equal to ${10\\choose0}x_0 + {10\\choose1}x_1 + {10\\choose2}x_2 + \\ldots {10\\choose10}x_{10}$. (This also makes sense based on a combinatorial argument: the number of ways a number can \"travel\" to the top position going only up is equal to the number of times it will be counted in the final sum.)\n Examine the equation $\\mod 3$. All of the coefficients from $x_2 \\ldots x_8$ will be multiples of $3$ (since the numerator will have a $9$). Thus, the expression boils down to $x_0 + 10x_1 + 10x_9 + x_{10} \\equiv 0 \\mod 3$. Reduce to find that $x_0 + x_1 + x_9 + x_{10} \\equiv 0 \\mod 3$. Out of $x_0,\\ x_1,\\ x_9,\\ x_{10}$, either all are equal to $0$, or three of them are equal to $1$. This gives ${4\\choose0} + {4\\choose3} = 1 + 4 = 5$ possible combinations of numbers that work.\n The seven terms from $x_2 \\ldots x_8$ can assume either $0$ or $1$, giving us $2^7$ possibilities. The answer is therefore $5 \\cdot 2^7 = \\boxed{640}$.\nNote\n The specific induction process: we want to prove that if the bottom row is $x_0, x_1 \\cdots x_{n}$, the top square is ${n\\choose0}x_0 + {n\\choose1}x_1 + {n\\choose2}x_2 + \\ldots {n\\choose{n}}x_{n}$.\n Base Case: when n = 1, this is obviously true.\n Induction Step: Assume that the statement is true for n, and we wish to prove it for $n + 1$. Therefore, we add another row below the $n + 1$ row, and name the squares as $a_0, a_1, \\cdots a_{n+1}$. We obtain that $x_0 = a_0 + a_1, x_1 = a_1 + a_2, \\cdots x_{n} = a_{n} + a_{n+1}$, and using the assumption, yield the top square equals ${n\\choose0}(a_0 + a_1) + {n\\choose1}(a_1 + a_2) + \\ldots {n\\choose{n}}(a_{n} + a_{n+1})$. While it's easy to prove that ${n\\choose{k}} + {n\\choose{k+1}} = {n+1\\choose{k+1}}$ (just expand it), we find that the two equations are identical.\n Note contributed by MVP_Harry, friend me if you want ~",
+        "answer": "640",
+        "year": 2007,
+        "aime_number": 2,
+        "problem_number": 13,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Let $f(x)$ be a polynomial with real coefficients such that $f(0) = 1,$ $f(2)+f(3)=125,$ and for all $x$, $f(x)f(2x^{2})=f(2x^{3}+x).$ Find $f(5).$",
+        "solution": "If the leading term of $f(x)$ is $ax^m$, then the leading term of $f(x)f(2x^2) = ax^m \\cdot a(2x^2)^m = 2^ma^2x^{3m}$, and the leading term of $f(2x^3 + x) = 2^max^{3m}$. Hence $2^ma^2 = 2^ma$, and $a = 1$. Because $f(0) = 1$, the product of all the roots of $f(x)$ is $\\pm 1$. If $f(\\lambda) = 0$, then $f(2\\lambda^3 + \\lambda) = 0$. Assume that there exists a root $\\lambda$ with $|\\lambda| \\neq 1$. Then there must be such a root $\\lambda_1$ with $|\\lambda_1| > 1$. Then \\[|2\\lambda^3 + \\lambda| \\ge 2|\\lambda|^3 - |\\lambda| > 2|\\lambda| - |\\lambda| = |\\lambda|.\\] But then $f(x)$ would have infinitely many roots, given by $\\lambda_{k+1} = 2\\lambda_k^3 + \\lambda_k$, for $k \\ge 1$. Therefore $|\\lambda| = 1$ for all of the roots of the polynomial. Thus $\\lambda\\overline{\\lambda}=1$, and $(2\\lambda^3 + \\lambda)\\overline{(2\\lambda^3 + \\lambda)} = 1$. Solving these equations simultaneously for $\\lambda = a + bi$ yields $a = 0$, $b^2 = 1$, and so $\\lambda^2 = -1$. Because the polynomial has real coefficients, the polynomial must have the form $f(x) = (1 + x^2)^n$ for some integer $n \\ge 1$. The condition $f(2) + f(3) = 125$ implies $n = 2$, giving $f(5) = \\boxed{676}$.",
+        "answer": "676",
+        "year": 2007,
+        "aime_number": 2,
+        "problem_number": 14,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "On a long straight stretch of one-way single-lane highway, cars all travel at the same speed and all obey the safety rule: the distance from the back of the car ahead to the front of the car behind is exactly one car length for each 15 kilometers per hour of speed or fraction thereof (Thus the front of a car traveling 52 kilometers per hour will be four car lengths behind the back of the car in front of it.) A photoelectric eye by the side of the road counts the number of cars that pass in one hour. Assuming that each car is 4 meters long and that the cars can travel at any speed, let $M$ be the maximum whole number of cars that can pass the photoelectric eye in one hour. Find the quotient when $M$ is divided by $10$.",
+        "solution": "Disclaimer: This is for the people who may not understand calculus, and is also how I did it. First, we assume several things. First, we assume the speeds must be multiples of 15 to maximize cars, because any less will be a waste. Second, we start with one car in front of the photoelectric eye. We first set the speed of the cars as $15k$. Then, the distance between them is $\\frac{4}{1000} \\times k\\text{km}$. Therefore, it takes the car closest to the eye not on the eye $\\frac{\\frac{k}{250}}{15k}$ hours to get to the eye. There is one hour, so the amount of cars that can pass is $\\frac{1}{\\frac{\\frac{k}{250}}{15k}}$, or $3750$ cars. When divided by ten, you get the quotient of $\\boxed{375}$",
+        "answer": "375",
+        "year": 2008,
+        "aime_number": 1,
+        "problem_number": 12,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Find the largest integer $n$ satisfying the following conditions:\n (i) $n^2$ can be expressed as the difference of two consecutive cubes;\n (ii) $2n + 79$ is a perfect square.",
+        "solution": "Let us generate numbers $1$ to $1000$ for the second condition, for squares. We know for $N$ to be integer, the squares must be odd. So we generate $N = 1, 21, 45, 73, 105, 141, 181, 381, 441, 721, 801$. $N$ cannot exceed $1000$ since it is AIME problem. Now take the first criterion, let $a$ be the smaller consecutive cube. We then get:\n$N^2 = (A + 1)^3 - A^3$\n$N^2 - 1 = 3A^2 + 3A$\n$(N + 1)(N - 1) = 3A(A + 1)$\n Now we know either $N + 1$ or $N - 1$ must be factor of $3$, hence $N = 1 \\pmod 3$ or$N = 2 \\pmod 3$. Only $1, 73, 181, 721$ satisfy this criterion. Testing each of the numbers in the condition yields $181$ as the largest that fits both, thus answer $= \\boxed{181}$.",
+        "answer": "181",
+        "year": 2008,
+        "aime_number": 2,
+        "problem_number": 15,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Let $m \\ge 3$ be an integer and let $S = \\{3,4,5,\\ldots,m\\}$. Find the smallest value of $m$ such that for every partition of $S$ into two subsets, at least one of the subsets contains integers $a$, $b$, and $c$ (not necessarily distinct) such that $ab = c$.\nNote: a partition of $S$ is a pair of sets $A$, $B$ such that $A \\cap B = \\emptyset$, $A \\cup B = S$.",
+        "solution": "We claim that $243$ is the minimal value of $m$. Let the two partitioned sets be $A$ and $B$; we will try to partition $3, 9, 27, 81,$ and $243$ such that the $ab=c$ condition is not satisfied. Without loss of generality, we place $3$ in $A$. Then $9$ must be placed in $B$, so $81$ must be placed in $A$, and $27$ must be placed in $B$. Then $243$ cannot be placed in any set, so we know $m$ is less than or equal to $243$.\n For $m \\le 242$, we can partition $S$ into $S \\cap \\{3, 4, 5, 6, 7, 8, 81, 82, 83, 84 ... 242\\}$ and $S \\cap \\{9, 10, 11 ... 80\\}$, and in neither set are there values where $ab=c$ (since $8 < (3\\text{ to }8)^2 < 81$ and $(9\\text{ to }80)^2 > 80$). Thus $m = \\boxed{243}$.\n ~Shreyas S",
+        "answer": "243",
+        "year": 2010,
+        "aime_number": 1,
+        "problem_number": 12,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "In $\\triangle{ABC}$ with $AB = 12$, $BC = 13$, and $AC = 15$, let $M$ be a point on $\\overline{AC}$ such that the incircles of $\\triangle{ABM}$ and $\\triangle{BCM}$ have equal radii. Then $\\frac{AM}{CM} = \\frac{p}{q}$, where $p$ and $q$ are relatively prime positive integers. Find $p + q$.",
+        "solution": "Let $CM=x, AM=rx, BM=d$. $x+rx=15\\Rightarrow x=\\frac{15}{1+r}$.\n Similar to Solution 1, we have \\[r=\\frac{[AMB]}{[CMB]}=\\frac{12+rx+d}{13+x+d} \\Rightarrow d=\\frac{13r-12}{1-r}\\] as well as \\[12^2\\cdot x + 13^2 rx=15x\\cdot rx+15d^2 (\\text{via Stewart's Theorem})\\] \\[\\frac{(12^2 + 13^2r) \\cdot 15}{1+r} - \\frac{15r\\cdot 15^2}{(1+r)^2}=\\frac{15(13r-12)^2}{(1-r)^2}\\] \\[\\frac{169r^2+88r+144}{(1+r)^2}=\\frac{(13r-12)^2}{(1-r)^2}\\] \\[(169r^2+88r+144)((r^2+1)-2r)=(169r^2-312r+144)((r^2+1)+2r)\\] \\[(r^2+1)(400r)=2r(338r^2-224r+288)\\] \\[100(r^2+1)=169r^2-112r+144 \\Rightarrow 69r^2-112r+44=(23r-22)(3r-2)=0\\]\n Since $d=\\frac{13r-12}{1-r}>0$, we have $r=\\frac{22}{23} \\longrightarrow \\boxed{045}$.\n ~ asops\nSidenote\n In the problem, $BM=10$ and the equal inradius of the two triangles happens to be $\\frac {2\\sqrt{14}}{3}$.",
+        "answer": "45",
+        "year": 2010,
+        "aime_number": 1,
+        "problem_number": 15,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Let $z_1,z_2,z_3,\\dots,z_{12}$ be the 12 zeroes of the polynomial $z^{12}-2^{36}$. For each $j$, let $w_j$ be one of $z_j$ or $i z_j$. Then the maximum possible value of the real part of $\\sum_{j=1}^{12} w_j$ can be written as $m+\\sqrt{n}$ where $m$ and $n$ are positive integers. Find $m+n$.",
+        "solution": "Use De Moivre's Theorem to brute force all the roots out. Then choose the greater value of $\\operatorname{Re}(z), \\operatorname{Re}(iz)$. After adeding everything up, you get $\\boxed{784}$.\n ~hastapasta",
+        "answer": "784",
+        "year": 2011,
+        "aime_number": 2,
+        "problem_number": 8,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Let $m$ be the largest real solution to the equation\n$\\frac{3}{x-3}+\\frac{5}{x-5}+\\frac{17}{x-17}+\\frac{19}{x-19}=x^2-11x-4$\n There are positive integers $a$, $b$, and $c$ such that $m=a+\\sqrt{b+\\sqrt{c}}$. Find $a+b+c$.",
+        "solution": "The first step is to notice that the 4 on the right hand side can simplify the terms on the left hand side. If we distribute 1 to $\\frac{3}{x-3}$, then the fraction becomes of the form $\\frac{x}{x - 3}$. A similar cancellation happens with the other four terms. If we assume $x = 0$ is not the highest solution (which is true given the answer format) we can cancel the common factor of $x$ from both sides of the equation.\n$\\frac{1}{x - 3} + \\frac{1}{x - 5} + \\frac{1}{x - 17} + \\frac{1}{x - 19} = x - 11$\n Then, if we make the substitution $y = x - 11$, we can further simplify.\n$\\frac{1}{y + 8} + \\frac{1}{y + 6} + \\frac{1}{y - 6} + \\frac{1}{y - 8} =y$\n If we group and combine the terms of the form $y - n$ and $y + n$, we get this equation:\n$\\frac{2y}{y^2 - 64} + \\frac{2y}{y^2 - 36} = y$\n Then, we can cancel out a $y$ from both sides, knowing that $x = 11$ is not a possible solution given the answer format. After we do that, we can make the final substitution $z = y^2$.\n$\\frac{2}{z - 64} + \\frac{2}{z - 36} = 1$\n$2z - 128 + 2z - 72 = (z - 64)(z - 36)$\n$4z - 200 = z^2 - 100z + 64(36)$\n$z^2 - 104z + 2504 = 0$\n Using the quadratic formula, we get that the largest solution for $z$ is $z = 52 + 10\\sqrt{2}$. Then, repeatedly substituting backwards, we find that the largest value of $x$ is $11 + \\sqrt{52 + \\sqrt{200}}$. The answer is thus $11 + 52 + 200 = \\boxed{263}$",
+        "answer": "263",
+        "year": 2014,
+        "aime_number": 1,
+        "problem_number": 14,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Consider all 1000-element subsets of the set $\\{1, 2, 3, ... , 2015\\}$. From each such subset choose the least element. The arithmetic mean of all of these least elements is $\\frac{p}{q}$, where $p$ and $q$ are relatively prime positive integers. Find $p + q$.\nHint\n Use the Hockey Stick Identity in the form\n\\[\\binom{a}{a} + \\binom{a+1}{a} + \\binom{a+2}{a} + \\dots + \\binom{b}{a} = \\binom{b+1}{a+1}.\\]\n (This is best proven by a combinatorial argument that coincidentally pertains to the problem: count two ways the number of subsets of the first $(b + 1)$ numbers with $(a + 1)$ elements whose least element is $i$, for $1 \\le i \\le b - a$.)",
+        "solution": "Let $p$ be the size of the large set and $q$ be the size of the subset (i.e. in this problem, $p = 2015$ and $q = 1000$). We can easily find the answers for smaller values of $p$ and $q$:\n For $p = 2$ and $q = 2$, the answer is $1$.\n For $p = 3$ and $q = 2$, the answer is $\\frac43$.\n For $p = 4$ and $q = 2$, the answer is $\\frac53$.\n For $p = 3$ and $q = 3$, the answer is $1$.\n For $p = 4$ and $q = 3$, the answer is $\\frac54$.\n For $p = 5$ and $q = 3$, the answer is $\\frac32$.\n At this point, we can see a pattern: our desired answer is always $\\frac{p+1}{q+1}$. Plugging in $p = 2015$ and $q = 1000$, the answer is $\\frac{2016}{1001}=\\frac{288}{143}$, so $288 + 143 = \\boxed{431}$.",
+        "answer": "431",
+        "year": 2015,
+        "aime_number": 1,
+        "problem_number": 12,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Steve says to Jon, \"I am thinking of a polynomial whose roots are all positive integers. The polynomial has the form $P(x) = 2x^3-2ax^2+(a^2-81)x-c$ for some positive integers $a$ and $c$. Can you tell me the values of $a$ and $c$?\"\n After some calculations, Jon says, \"There is more than one such polynomial.\"\n Steve says, \"You're right. Here is the value of $a$.\" He writes down a positive integer and asks, \"Can you tell me the value of $c$?\"\n Jon says, \"There are still two possible values of $c$.\"\n Find the sum of the two possible values of $c$.",
+        "solution": "Since each of the roots is positive, the local maximum of the function must occur at a positive value of $x$. Taking $\\frac{d}{dx}$ of the polynomial yields $6x^2-4ax+a^2-81$, which is equal to $0$ at the local maximum. Since this is a quadratic in $a$, we can find an expression for $a$ in terms of $x$. The quadratic formula gives $a=\\frac{4x\\pm\\sqrt{324-8x^2}}{2}$, which simplifies to $a=2x\\pm\\sqrt{81-2x^2}$. We know that $a$ is a positive integer, and testing small positive integer values of $x$ yields $a=15$ or $a=1$ when $x=4$, and $a=15$ or $a=9$ when $x=6$. Because the value of $a$ alone does not determine the polynomial, $a$, $a$ must equal $15$.\n Now our polynomial equals $2x^3-30x^2+144x-c$. Because one root is less than (or equal to) the $x$ value at the local maximum (picture the graph of a cubic equation), it suffices to synthetically divide by small integer values of $x$ to see if the resulting quadratic also has positive integer roots. Dividing by $x=3$ leaves a quotient of $2x^2-24x+72=2(x-6)^2$, and dividing by $x=4$ leaves a quotient of $2x^2-22x+56=2(x-4)(x-7)$. Thus, $c=2\\cdot 3\\cdot 6\\cdot 6=216$, or $c=2\\cdot 4\\cdot 4\\cdot 7=224$. Our answer is $216+224=\\boxed{440}$ ~bad_at_mathcounts",
+        "answer": "440",
+        "year": 2015,
+        "aime_number": 2,
+        "problem_number": 6,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Let $N$ be the number of complex numbers $z$ with the properties that $|z|=1$ and $z^{6!}-z^{5!}$ is a real number. Find the remainder when $N$ is divided by $1000$.",
+        "solution": "As mentioned in solution one, for the difference of two complex numbers to be real, their imaginary parts must be equal. We use exponential form of complex numbers. Let $z = e^{i \\theta}$. We have two cases to consider. Either $z^{6!} = z^{5!}$, or $z^{6!}$ and $z^{5!}$ are reflections across the imaginary axis. If $z^{6!} = z^{5!}$, then $e^{6! \\theta i} = e^{5! \\theta i}$. Thus, $720 \\theta = 120 \\theta$ or $600\\theta = 0$, giving us 600 solutions. (Equalities are taken modulo $2 \\pi$) For the second case, $e^{6! \\theta i} = e^{(\\pi - 5!\\theta)i}$. This means $840 \\theta = \\pi$, giving us 840 solutions. Our total count is thus $1440$, yielding a final answer of $\\boxed{440}$.",
+        "answer": "440",
+        "year": 2018,
+        "aime_number": 1,
+        "problem_number": 6,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Triangle $ABC$ has side lengths $AB = 9$, $BC =$ $5\\sqrt{3}$, and $AC = 12$. Points $A = P_{0}, P_{1}, P_{2}, ... , P_{2450} = B$ are on segment $\\overline{AB}$ with $P_{k}$ between $P_{k-1}$ and $P_{k+1}$ for $k = 1, 2, ..., 2449$, and points $A = Q_{0}, Q_{1}, Q_{2}, ... , Q_{2450} = C$ are on segment $\\overline{AC}$ with $Q_{k}$ between $Q_{k-1}$ and $Q_{k+1}$ for $k = 1, 2, ..., 2449$. Furthermore, each segment $\\overline{P_{k}Q_{k}}$, $k = 1, 2, ..., 2449$, is parallel to $\\overline{BC}$. The segments cut the triangle into $2450$ regions, consisting of $2449$ trapezoids and $1$ triangle. Each of the $2450$ regions has the same area. Find the number of segments $\\overline{P_{k}Q_{k}}$, $k = 1, 2, ..., 2450$, that have rational length.",
+        "solution": "Let $T_1$ stand for $AP_1Q_1$, and $T_k = AP_kQ_k$. All triangles $T$ are similar by AA. Let the area of $T_1$ be $x$. The next trapezoid will also have an area of $x$, as given. Therefore, $T_k$ has an area of $kx$. The ratio of the areas is equal to the square of the scale factor for any plane figure and its image. Therefore, $P_k Q_k=P_1 Q_1\\cdot \\sqrt{k}$, and the same if $Q$ is substituted for $P$ throughout. We want the side $P_k Q_k$ to be rational. Setting up proportions: \\[5\\sqrt{3} : \\sqrt{2450}=35\\sqrt{2}\\] \\[\\sqrt{6} : 14\\] which shows that $P_1 Q_1=\\frac{\\sqrt{6}}{14}$. In order for $\\sqrt{k} P_1 Q_1$ to be rational, $\\sqrt{k}$ must be some rational multiple of $\\sqrt{6}$. This is achieved at $\\sqrt{k}=\\sqrt{6}, 2\\sqrt{6}, \\ldots, 20\\sqrt{6}$. We end there as $21\\sqrt{6}=\\sqrt{2646}$. There are 20 numbers from 1 to 20, so there are $\\boxed{020}$ solutions.\n Solution by a1b2",
+        "answer": "20",
+        "year": 2018,
+        "aime_number": 2,
+        "problem_number": 7,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Ellina has twelve blocks, two each of red ($\\textbf{R}$), blue ($\\textbf{B}$), yellow ($\\textbf{Y}$), green ($\\textbf{G}$), orange ($\\textbf{O}$), and purple ($\\textbf{P}$). Call an arrangement of blocks $\\textit{even}$ if there is an even number of blocks between each pair of blocks of the same color. For example, the arrangement \\[\\textbf{R B B Y G G Y R O P P O}\\] is even. Ellina arranges her blocks in a row in random order. The probability that her arrangement is even is $\\frac{m}{n},$ where $m$ and $n$ are relatively prime positive integers. Find $m+n.$",
+        "solution": "We can simply use constructive counting. First, let us place the red balls; choose the first slot in $12$ ways, and the second in $6$ ways, because the number is cut in half due to the condition in the problem. This gives $12 \\cdot 6$ ways to place the blue balls. Similarly, there are $10 \\cdot 5$ ways to place the blue balls, and so on, until there are $2 \\cdot 1$ ways to place the purple balls. Thus, the probability is \\[\\frac{12 \\cdot 6 \\cdot 10 \\cdot 5 \\cdot 8 \\cdot 4 \\cdot 6 \\cdot 3 \\cdot 4 \\cdot 2 \\cdot 2 \\cdot 1}{12!}=\\frac{16}{231},\\] and the desired answer extraction is $16+231=\\boxed{247}$.\n ~A1001",
+        "answer": "247",
+        "year": 2022,
+        "aime_number": 1,
+        "problem_number": 9,
+        "difficulty": 6.0
+    }
+]

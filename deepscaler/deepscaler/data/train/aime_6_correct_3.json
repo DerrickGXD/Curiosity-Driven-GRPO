@@ -1,0 +1,101 @@
+[
+    {
+        "problem": "Let $\\overline{CH}$ be an altitude of $\\triangle ABC$. Let $R\\,$ and $S\\,$ be the points where the circles inscribed in the triangles $ACH\\,$ and $BCH^{}_{}$ are tangent to $\\overline{CH}$. If $AB = 1995\\,$, $AC = 1994\\,$, and $BC = 1993\\,$, then $RS\\,$ can be expressed as $m/n\\,$, where $m\\,$ and $n\\,$ are relatively prime integers. Find $m + n\\,$.",
+        "solution": "[asy] unitsize(48); pair A,B,C,H; A=(8,0); B=origin; C=(3,4); H=(3,0); draw(A--B--C--cycle); draw(C--H); label(\"$A$\",A,SE); label(\"$B$\",B,SW); label(\"$C$\",C,N); label(\"$H$\",H,NE); draw(circle((2,1),1)); pair [] x=intersectionpoints(C--H,circle((2,1),1)); dot(x[0]); label(\"$S$\",x[0],SW); draw(circle((4.29843788128,1.29843788128),1.29843788128)); pair [] y=intersectionpoints(C--H,circle((4.29843788128,1.29843788128),1.29843788128)); dot(y[0]); label(\"$R$\",y[0],NE); label(\"$1993$\",(1.5,2),NW); label(\"$1994$\",(5.5,2),NE); label(\"$1995$\",(4,0),S); [/asy]\n From the Pythagorean Theorem, $AH^2+CH^2=1994^2$, and $(1995-AH)^2+CH^2=1993^2$.\n Subtracting those two equations yields $AH^2-(1995-AH)^2=3987$.\n After simplification, we see that $2*1995AH-1995^2=3987$, or $AH=\\frac{1995}{2}+\\frac{3987}{2*1995}$.\n Note that $AH+BH=1995$.\n Therefore we have that $BH=\\frac{1995}{2}-\\frac{3987}{2*1995}$.\n Therefore $AH-BH=\\frac{3987}{1995}$.\n Now note that $RS=|HR-HS|$, $RH=\\frac{AH+CH-AC}{2}$, and $HS=\\frac{CH+BH-BC}{2}$.\n Therefore we have $RS=\\left| \\frac{AH+CH-AC-CH-BH+BC}{2} \\right|=\\frac{|AH-BH-1994+1993|}{2}$.\n Plugging in $AH-BH$ and simplifying, we have $RS=\\frac{1992}{1995*2}=\\frac{332}{665} \\rightarrow 332+665=\\boxed{997}$.\n Edit by GameMaster402:\n It can be shown that in any triangle with side lengths $n-1, n, n+1$, if you draw an altitude from the vertex to the side of $n+1$, and draw the incircles of the two right triangles, the distance between the two tangency points is simply $\\frac{n-2}{2n+2)}=\\frac{n-2}{2(n+1)}$.\n Plugging in $n=1994$ yields that the answer is $\\frac{1992}{2(1995)}$, which simplifies to $\\frac{332}{665}$\n Edit by phoenixfire:\n It can further be shown for any triangle with sides $a=BC, b=CA, c=AB$ that \\[RS=\\dfrac{|b-a|}{2c}|a+b-c|\\] Over here $a=1993, b=1994, c=1995$.",
+        "answer": "997",
+        "year": 1993,
+        "aime_number": 1,
+        "problem_number": 15,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Let $f(n)$ be the integer closest to $\\sqrt[4]{n}.$ Find $\\sum_{k=1}^{1995}\\frac 1{f(k)}.$",
+        "solution": "This is a pretty easy problem just to bash. Since the max number we can get is $7$, we just need to test $n$ values for $1.5,2.5,3.5,4.5,5.5$ and $6.5$. Then just do how many numbers there are times $\\frac{1}{\\lfloor n \\rfloor}$, which should be $5+17+37+65+101+145+30 = \\boxed{400}$",
+        "answer": "400",
+        "year": 1995,
+        "aime_number": 1,
+        "problem_number": 13,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Let $p_{}$ be the probability that, in the process of repeatedly flipping a fair coin, one will encounter a run of $5$ heads before one encounters a run of $2$ tails. Given that $p_{}$ can be written in the form $m/n$ where $m_{}$ and $n_{}$ are relatively prime positive integers, find $m+n$.",
+        "solution": "Let $p_H, p_T$ respectively denote the probabilities that a string beginning with H's and T's are successful. Thus,\n$p_T = \\frac 12p_H.$\n A successful string can either start with 1 to 4 H's, start with a T and then continue with a string starting with H (as there cannot be $2$ T's in a row, or be the string HHHHH.\n There is a $\\frac{1}{16}$ probability we roll $4$ consecutive H's, and there is a $\\frac{15}{16}$ probability we roll a T. Thus,\n$p_H = \\left(\\frac{15}{16}\\right) \\cdot \\left(\\frac 12\\right) p_H + \\frac{1}{32} \\Longrightarrow p_H = \\frac{1}{17}.$\n The answer is $p_H + p_T = \\frac{3}{2}p_H = \\frac{3}{34}$, and $m+n = \\boxed{037}$.",
+        "answer": "37",
+        "year": 1995,
+        "aime_number": 1,
+        "problem_number": 15,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "There are $2n$ complex numbers that satisfy both $z^{28} - z^{8} - 1 = 0$ and $\\mid z \\mid = 1$. These numbers have the form $z_{m} = \\cos\\theta_{m} + i\\sin\\theta_{m}$, where $0\\leq\\theta_{1} < \\theta_{2} < \\ldots < \\theta_{2n} < 360$ and angles are measured in degrees. Find the value of $\\theta_{2} + \\theta_{4} + \\ldots + \\theta_{2n}$.",
+        "solution": "$z$ can be written in the form $\\text{cis\\,}\\theta$. Rearranging, we find that $\\text{cis\\,}{28}\\theta = \\text{cis\\,}{8}\\theta+1$\n Since the real part of $\\text{cis\\,}{28}\\theta$ is one more than the real part of $\\text{cis\\,} {8}\\theta$ and their imaginary parts are equal, it is clear that either $\\text{cis\\,}{28}\\theta = \\frac{1}{2}+\\frac {\\sqrt{3}}{2}i$ and $\\text{cis\\,} {8}\\theta = -\\frac{1}{2}+\\frac {\\sqrt{3}}{2}i$, or $\\text{cis\\,}{28}\\theta = \\frac{1}{2} - \\frac{\\sqrt{3}}{2}i$ and $\\text{cis\\,} {8}\\theta = -\\frac{1}{2}- \\frac{\\sqrt{3}}{2}i$\nCase 1  : $\\text{cis\\,}{28}\\theta = \\frac{1}{2}+ \\frac{\\sqrt{3}}{2}i$ and $\\text{cis\\,} {8}\\theta = -\\frac{1}{2}+\\frac{\\sqrt{3}}{2}i$\n Setting up and solving equations, $Z^{28}= \\text{cis\\,}{60^\\circ}$ and $Z^8= \\text{cis\\,}{120^\\circ}$, we see that the solutions common to both equations have arguments $15^\\circ , 105^\\circ, 195^\\circ,$ and $\\ 285^\\circ$. We can figure this out by adding 360 repeatedly to the number 60 to try and see if it will satisfy what we need. We realize that it does not work in the integer values.\nCase 2  : $\\text{cis\\,}{28}\\theta = \\frac{1}{2} -\\frac {\\sqrt{3}}{2}i$ and $\\text{cis\\,} {8}\\theta = -\\frac {1}{2} -\\frac{\\sqrt{3}}{2}i$\n Again setting up equations ($Z^{28}= \\text{cis\\,}{300^\\circ}$ and $Z^{8} = \\text{cis\\,}{240^\\circ}$) we see that the common solutions have arguments of $75^\\circ, 165^\\circ, 255^\\circ,$ and $345^\\circ$\n Listing all of these values, we find that $\\theta_{2} + \\theta_{4} + \\ldots + \\theta_{2n}$ is equal to $(75 + 165 + 255 + 345) ^\\circ$ which is equal to $\\boxed{840}$ degrees. We only want the sum of a certain number of theta, not all of it.",
+        "answer": "840",
+        "year": 2001,
+        "aime_number": 2,
+        "problem_number": 14,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Let $F(z)=\\dfrac{z+i}{z-i}$ for all complex numbers $z\\neq i$, and let $z_n=F(z_{n-1})$ for all positive integers $n$. Given that $z_0=\\dfrac{1}{137}+i$ and $z_{2002}=a+bi$, where $a$ and $b$ are real numbers, find $a+b$.",
+        "solution": "Iterating $F$ we get:\n\\begin{align*} F(z) &= \\frac{z+i}{z-i}\\\\ F(F(z)) &= \\frac{\\frac{z+i}{z-i}+i}{\\frac{z+i}{z-i}-i} = \\frac{(z+i)+i(z-i)}{(z+i)-i(z-i)}= \\frac{z+i+zi+1}{z+i-zi-1}= \\frac{(z+1)(i+1)}{(z-1)(1-i)}\\\\ &= \\frac{(z+1)(i+1)^2}{(z-1)(1^2+1^2)}= \\frac{(z+1)(2i)}{(z-1)(2)}= \\frac{z+1}{z-1}i\\\\ F(F(F(z))) &= \\frac{\\frac{z+1}{z-1}i+i}{\\frac{z+1}{z-1}i-i} = \\frac{\\frac{z+1}{z-1}+1}{\\frac{z+1}{z-1}-1} = \\frac{(z+1)+(z-1)}{(z+1)-(z-1)} = \\frac{2z}{2} = z. \\end{align*}\n From this, it follows that $z_{k+3} = z_k$, for all $k$. Thus $z_{2002} = z_{3\\cdot 667+1} = z_1 = \\frac{z_0+i}{z_0-i} = \\frac{(\\frac{1}{137}+i)+i}{(\\frac{1}{137}+i)-i}= \\frac{\\frac{1}{137}+2i}{\\frac{1}{137}}= 1+274i.$\n Thus $a+b = 1+274 = \\boxed{275}$.",
+        "answer": "275",
+        "year": 2002,
+        "aime_number": 1,
+        "problem_number": 12,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "In triangle $ABC,$ point $D$ is on $\\overline{BC}$ with $CD = 2$ and $DB = 5,$ point $E$ is on $\\overline{AC}$ with $CE = 1$ and $EA = 3,$ $AB = 8,$ and $\\overline{AD}$ and $\\overline{BE}$ intersect at $P.$ Points $Q$ and $R$ lie on $\\overline{AB}$ so that $\\overline{PQ}$ is parallel to $\\overline{CA}$ and $\\overline{PR}$ is parallel to $\\overline{CB}.$ It is given that the ratio of the area of triangle $PQR$ to the area of triangle $ABC$ is $m/n,$ where $m$ and $n$ are relatively prime positive integers. Find $m + n$.",
+        "solution": "[asy] size(10cm); pair A,B,C,D,E,P,Q,R; A=(0,0); B=(8,0); C=(1.9375,3.4994); D=(3.6696,2.4996); E=(1.4531,2.6246); P=(2.9639,2.0189); Q=(1.8462,0); R=(6.4615,0); dot(A); dot(B); dot(C); dot(D); dot(E); dot(P); dot(Q); dot(R); label(\"$A$\",A,WSW); label(\"$B$\",B,ESE); label(\"$C$\",C,NNW); label(\"$D$\",D,NE); label(\"$E$\",E,WNW); label(\"$P$\",P,NNE); label(\"$Q$\",Q,SSW); label(\"$R$\",R,SE); draw(A--B--C--cycle); draw(P--Q--R--cycle); draw(A--D); draw(B--E); [/asy] Use the mass of point. Denoting the mass of $C=15,B=6,A=5,D=21,E=20$, we can see that the mass of Q is $26$, hence we know that $\\frac{BP}{PE}=\\frac{10}{3}$, now we can find that $\\frac{PQ}{AE}=\\frac{10}{3}$ which implies $PQ=\\frac{30}{13}$, it is obvious that $\\triangle{PQR}$ is similar to $\\triangle{ACB}$ so we need to find the ration between PQ and AC, which is easy, it is $\\frac{15}{26}$, so our final answer is $\\left( \\frac{15}{26} \\right)^2= \\frac{225}{676}$ which is $\\boxed{901}$. ~bluesoul",
+        "answer": "901",
+        "year": 2002,
+        "aime_number": 2,
+        "problem_number": 13,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Equilateral $\\triangle ABC$ is inscribed in a circle of radius $2$. Extend $\\overline{AB}$ through $B$ to point $D$ so that $AD=13,$ and extend $\\overline{AC}$ through $C$ to point $E$ so that $AE = 11.$ Through $D,$ draw a line $l_1$ parallel to $\\overline{AE},$ and through $E,$ draw a line $l_2$ parallel to $\\overline{AD}.$ Let $F$ be the intersection of $l_1$ and $l_2.$ Let $G$ be the point on the circle that is collinear with $A$ and $F$ and distinct from $A.$ Given that the area of $\\triangle CBG$ can be expressed in the form $\\frac{p\\sqrt{q}}{r},$ where $p, q,$ and $r$ are positive integers, $p$ and $r$ are relatively prime, and $q$ is not divisible by the square of any prime, find $p+q+r.$",
+        "solution": "Note that $AB=2\\sqrt3$, $DF=11$, and $EF=13$. If we take a homothety of the parallelogram with respect to $A$, such that $F$ maps to $G$, we see that $\\frac{[ABG]}{[ACG]}=\\frac{11}{13}$. Since $\\angle AGB=\\angle AGC=60^{\\circ}$, from the sine area formula we have $\\frac{BG}{CG}=\\frac{11}{13}$. Let $BG=11k$ and $CG=13k$.\n By Law of Cosines on $\\triangle BGC$, we have \\[12=k^2(11^2+11\\cdot13+13^2)=433k^2\\implies k^2=\\frac{12}{433}\\] Thus, $[CBG]=\\frac12 (11k)(13k)\\sin 120^{\\circ} = \\frac{\\sqrt3}{4}\\cdot 143\\cdot \\frac{12}{433}=\\frac{429\\sqrt3}{433}\\implies\\boxed{865}$.\n ~rayfish",
+        "answer": "865",
+        "year": 2006,
+        "aime_number": 2,
+        "problem_number": 12,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Let $\\overline{AB}$ be a diameter of circle $\\omega$. Extend $\\overline{AB}$ through $A$ to $C$. Point $T$ lies on $\\omega$ so that line $CT$ is tangent to $\\omega$. Point $P$ is the foot of the perpendicular from $A$ to line $CT$. Suppose $\\overline{AB} = 18$, and let $m$ denote the maximum possible length of segment $BP$. Find $m^{2}$.",
+        "solution": "Proceed as follows for Solution 1.\n Once you approach the function $k=(2x-27)/x^2$, find the maximum value by setting $dk/dx=0$.\n Simplifying $k$ to take the derivative, we have $2/x-27/x^2$, so $dk/dx=-2/x^2+54/x^3$. Setting $dk/dx=0$, we have $2/x^2=54/x^3$.\n Solving, we obtain $x=27$ as the critical value. Hence, $k$ has the maximum value of $(2*27-27)/27^2=1/27$. Since $BP^2=405+729k$, the maximum value of $\\overline {BP}$ occurs at $k=1/27$, so $BP^2$ has a maximum value of $405+729/27=\\boxed{432}$.\n Note: Please edit this solution if it feels inadequate.",
+        "answer": "432",
+        "year": 2008,
+        "aime_number": 1,
+        "problem_number": 14,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Nine delegates, three each from three different countries, randomly select chairs at a round table that seats nine people. Let the probability that each delegate sits next to at least one delegate from another country be $\\frac{m}{n}$, where $m$ and $n$ are relatively prime positive integers. Find $m + n$.",
+        "solution": "Use complementary probability and Principle of Inclusion-Exclusion. If we consider the delegates from each country to be indistinguishable and number the chairs, we have \\[\\frac{9!}{(3!)^3} = \\frac{9\\cdot8\\cdot7\\cdot6\\cdot5\\cdot4}{6\\cdot6} = 6\\cdot8\\cdot7\\cdot5 = 30\\cdot56\\] total ways to seat the candidates.\n Of these, there are $3 \\times 9 \\times \\frac{6!}{(3!)^2}$ ways to have the candidates of at least some one country sit together. This comes to \\[\\frac{27\\cdot6\\cdot5\\cdot4}6 = 27\\cdot 20.\\]\n Among these there are $3 \\times 9 \\times 4$ ways for candidates from two countries to each sit together. This comes to $27\\cdot 4.$\n Finally, there are $9 \\times 2 = 18.$ ways for the candidates from all the countries to sit in three blocks (9 clockwise arrangements, and 9 counter-clockwise arrangements).\n So, by PIE, the total count of unwanted arrangements is $27\\cdot 20 - 27\\cdot 4 + 18 = 16\\cdot27 + 18 = 18\\cdot25.$ So the fraction \\[\\frac mn = \\frac{30\\cdot 56 - 18\\cdot 25}{30\\cdot 56} = \\frac{56 - 15}{56} = \\frac{41}{56}.\\] Thus $m + n = 56 + 41 = \\boxed{097}.$",
+        "answer": "97",
+        "year": 2011,
+        "aime_number": 2,
+        "problem_number": 12,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Circles $\\mathcal{P}$ and $\\mathcal{Q}$ have radii $1$ and $4$, respectively, and are externally tangent at point $A$. Point $B$ is on $\\mathcal{P}$ and point $C$ is on $\\mathcal{Q}$ so that line $BC$ is a common external tangent of the two circles. A line $\\ell$ through $A$ intersects $\\mathcal{P}$ again at $D$ and intersects $\\mathcal{Q}$ again at $E$. Points $B$ and $C$ lie on the same side of $\\ell$, and the areas of $\\triangle DBA$ and $\\triangle ACE$ are equal. This common area is $\\frac{m}{n}$, where $m$ and $n$ are relatively prime positive integers. Find $m+n$.\n[asy] import cse5; pathpen=black; pointpen=black; size(6cm); pair E = IP(L((-.2476,1.9689),(0.8,1.6),-3,5.5),CR((4,4),4)), D = (-.2476,1.9689); filldraw(D--(0.8,1.6)--(0,0)--cycle,gray(0.7)); filldraw(E--(0.8,1.6)--(4,0)--cycle,gray(0.7)); D(CR((0,1),1)); D(CR((4,4),4,150,390)); D(L(MP(\"D\",D(D),N),MP(\"A\",D((0.8,1.6)),NE),1,5.5)); D((-1.2,0)--MP(\"B\",D((0,0)),S)--MP(\"C\",D((4,0)),S)--(8,0)); D(MP(\"E\",E,N)); [/asy]\nHint\n$[ABC] = \\frac{1}{2}ab \\text{sin} C$ is your friend for a quick solve. If you know about homotheties, go ahead, but you'll still need to do quite a bit of computation. If you're completely lost and you have a lot of time left in your mocking of this AIME, go ahead and use analytic geometry.",
+        "solution": "Let $P$ and $Q$ be the centers of circles $\\mathcal{P}$ and $\\mathcal{Q}$ , respectively.\n Let $M$ be midpoint $BC, \\beta = \\angle ACB.$\n Upper diagram shows that\n$\\sin 2\\beta = \\frac {4}{5}$ and $AC = 2 AB.$ Therefore $\\cos 2\\beta = \\frac {3}{5}.$\n Let $CH\\perp l, BH'\\perp l.$ Lower diagram shows that\n$\\angle CAE = \\angle ABH' = \\alpha$ (perpendicular sides)\n and $\\angle CQE = 2\\alpha$ (the same intersept $\\overset{\\Large\\frown} {CE}).$ \\[\\tan\\alpha = \\frac {1}{8}, \\sin2\\alpha = \\frac{2 \\tan \\alpha}{1 + \\tan^2 \\alpha} = \\frac {16}{65}, \\cos2\\alpha = \\frac{1 - \\tan^2 \\alpha}{1 + \\tan^2 \\alpha} = \\frac {63}{65}.\\] The area \\[[ACE] = [AQC]+[CQE]– [AQE].\\] Hence \\[[ACE] =\\frac{AQ^2}{2} \\left(\\sin 2\\alpha + \\sin 2\\beta - \\sin(2\\alpha + 2\\beta)\\right),\\] \\[[ACE] = 8\\left( \\frac{16}{65}+\\frac{4}{5} - \\frac{4}{5}\\cdot \\frac{63}{65} - \\frac{3}{5}\\cdot \\frac{16}{65}\\right) = \\frac{64}{65}\\implies \\boxed{129}.\\] vladimir.shelomovskii@gmail.com, vvsss",
+        "answer": "129",
+        "year": 2015,
+        "aime_number": 2,
+        "problem_number": 15,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "For each positive integer $n$, let $f(n)$ be the sum of the digits in the base-four representation of $n$ and let $g(n)$ be the sum of the digits in the base-eight representation of $f(n)$. For example, $f(2020) = f(133210_{\\text{4}}) = 10 = 12_{\\text{8}}$, and $g(2020) = \\text{the digit sum of }12_{\\text{8}} = 3$. Let $N$ be the least value of $n$ such that the base-sixteen representation of $g(n)$ cannot be expressed using only the digits $0$ through $9$. Find the remainder when $N$ is divided by $1000$.",
+        "solution": "Let's work backwards. The minimum base-sixteen representation of $g(n)$ that cannot be expressed using only the digits $0$ through $9$ is $A_{16}$, which is equal to $10$ in base 10. Thus, the sum of the digits of the base-eight representation of the sum of the digits of $f(n)$ is $10$. The minimum value for which this is achieved is $37_8$. We have that $37_8 = 31$. Thus, the sum of the digits of the base-four representation of $n$ is $31$. The minimum value for which this is achieved is $13,333,333,333_4$. We just need this value in base 10 modulo 1000. We get $13,333,333,333_4 = 3(1 + 4 + 4^2 + \\dots + 4^8 + 4^9) + 4^{10} = 3\\left(\\dfrac{4^{10} - 1}{3}\\right) + 4^{10} = 2*4^{10} - 1$. Taking this value modulo $1000$, we get the final answer of $\\boxed{151}$. (If you are having trouble with this step, note that $2^{10} = 1024 \\equiv 24 \\pmod{1000}$) ~ TopNotchMath",
+        "answer": "151",
+        "year": 2020,
+        "aime_number": 2,
+        "problem_number": 5,
+        "difficulty": 6.0
+    }
+]

@@ -1,0 +1,83 @@
+[
+    {
+        "problem": "Find the value of $10\\cot(\\cot^{-1}3+\\cot^{-1}7+\\cot^{-1}13+\\cot^{-1}21).$",
+        "solution": "On the coordinate plane, let $O=(0,0)$, $A_1=(3,0)$, $A_2=(3,1)$, $B_1=(21,7)$, $B_2=(20,10)$, $C_1=(260,130)$, $C_2=(250,150)$, $D_1=(5250,3150)$, $D_2=(5100,3400)$, and $H=(5100,0)$. We see that $\\cot^{-1}(\\angle A_2OA_1)=3$, $\\cot^{-1}(\\angle B_2OB_1)=7$, $\\cot^{-1}(\\angle C_2OC_1)=13$, and $\\cot^{-1}(\\angle D_2OD_1)=21$. The sum of these four angles forms the angle of triangle $OD_2H$, which has a cotangent of $\\frac{5100}{3400}=\\frac{3}{2}$, which must mean that $\\cot( \\cot^{-1}3+\\cot^{-1}7+\\cot^{-1}13+\\cot^{-1}21)=\\frac{3}{2}$. So the answer is $10\\cdot\\left(\\frac{3}{2}\\right)=\\boxed{015}.$",
+        "answer": "15",
+        "year": 1984,
+        "aime_number": 1,
+        "problem_number": 13,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "A drawer contains a mixture of red socks and blue socks, at most $1991$ in all. It so happens that, when two socks are selected randomly without replacement, there is a probability of exactly $\\frac{1}{2}$ that both are red or both are blue. What is the largest possible number of red socks in the drawer that is consistent with this data?",
+        "solution": "Let $r$ and $b$ denote the number of red and blue socks such that $r+b\\le1991$. Then by complementary counting, the number of ways to get a red and a blue sock must be equal to $1-\\frac12=\\frac12=\\frac{2rb}{(r+b)(r+b-1)}\\implies4rb=(r+b)(r+b-1)$ $=(r+b)^2-(r+b)\\implies r^2+2rb+b^2-r-b=4rb\\implies r^2-2rb+b^2$ $=(r-b)^2=r+b$, so $r+b$ must be a perfect square $k^2$. Clearly, $r=\\frac{k^2+k}2$, so the larger $k$, the larger $r$: $k^2=44^2$ is the largest perfect square below $1991$, and our answer is $\\frac{44^2+44}2=\\frac12\\cdot44(44+1)=22\\cdot45=11\\cdot90=\\boxed{990}$.",
+        "answer": "990",
+        "year": 1991,
+        "aime_number": 1,
+        "problem_number": 13,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Let $P(x)$ be a polynomial with integer coefficients that satisfies $P(17)=10$ and $P(24)=17.$ Given that $P(n)=n+3$ has two distinct integer solutions $n_1$ and $n_2,$ find the product $n_1\\cdot n_2.$",
+        "solution": "We define $Q(x)=P(x)-x+7$, noting that it has roots at $17$ and $24$. Hence $P(x)-x+7=A(x-17)(x-24)$. In particular, this means that $P(x)-x-3=A(x-17)(x-24)-10$. Therefore, $x=n_1,n_2$ satisfy $A(x-17)(x-24)=10$, where $A$, $(x-17)$, and $(x-24)$ are integers. This cannot occur if $x\\le 17$ or $x\\ge 24$ because the product $(x-17)(x-24)$ will either be too large or not be a divisor of $10$. We find that $x=19$ and $x=22$ are the only values that allow $(x-17)(x-24)$ to be a factor of $10$. Hence the answer is $19\\cdot 22=\\boxed{418}$.",
+        "answer": "418",
+        "year": 2005,
+        "aime_number": 2,
+        "problem_number": 13,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "For $t = 1, 2, 3, 4$, define $S_t = \\sum_{i = 1}^{350}a_i^t$, where $a_i \\in \\{1,2,3,4\\}$. If $S_1 = 513$ and $S_4 = 4745$, find the minimum possible value for $S_2$.",
+        "solution": "Because the order of the $a$'s doesn't matter, we simply need to find the number of $1$s $2$s $3$s and $4$s that minimize $S_2$. So let $w, x, y,$ and $z$ represent the number of $1$s, $2$s, $3$s, and $4$s respectively. Then we can write three equations based on these variables. Since there are a total of $350$ $a$s, we know that $w + x + y + z = 350$. We also know that $w + 2x + 3y + 4z = 513$ and $w + 16x + 81y + 256z = 4745$. We can now solve these down to two variables: \\[w = 350 - x - y - z\\] Substituting this into the second and third equations, we get \\[x + 2y + 3z = 163\\] and \\[15x + 80y + 255z = 4395.\\] The second of these can be reduced to \\[3x + 16y + 51z = 879.\\] Now we substitute $x$ from the first new equation into the other new equation. \\[x = 163 - 2y - 3z\\] \\[3(163 - 2y - 3z) + 16y + 51z = 879\\] \\[489 + 10y + 42z = 879\\] \\[5y + 21z = 195\\] Since $y$ and $z$ are integers, the two solutions to this are $(y,z) = (39,0)$ or $(18,5)$. If you plug both these solutions in to $S_2$ it is apparent that the second one returns a smaller value. It turns out that $w = 215$, $x = 112$, $y = 18$, and $z = 5$, so $S_2 = 215 + 4*112 + 9*18 + 16*5 = 215 + 448 + 162 + 80 = \\boxed{905}$.",
+        "answer": "905",
+        "year": 2009,
+        "aime_number": 1,
+        "problem_number": 14,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "For some integer $m$, the polynomial $x^3 - 2011x + m$ has the three integer roots $a$, $b$, and $c$. Find $|a| + |b| + |c|$.",
+        "solution": "We have\n$(x-a)\\cdot (x-b)\\cdot (x-c)=x^3-(a+b+c)x+(ab+ac+bc)x-abc$ \n As a result, we have\n$a+b+c=0$\n$ab+bc+ac=-2011$\n$abc=-m$\n So, $a=-b-c$\n As a result, $ab+bc+ac=(-b-c)b+(-b-c)c+bc=-b^2-c^2-bc=-2011$\n Solve $b=\\frac {-c+\\sqrt{c^2-4(c^2-2011)}}{2}$ and $\\Delta =8044-3c^2=k^2$, where $k$ is an integer\n Cause $89<\\sqrt{8044}<90$\n So, after we tried for $2$ times, we get $k=88$ and $c=10$\n then $b=39$, $a=-b-c=-49$\n As a result, $|a|+|b|+|c|=10+39+49=\\boxed{098}$",
+        "answer": "98",
+        "year": 2011,
+        "aime_number": 1,
+        "problem_number": 15,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "Let $M_n$ be the $n \\times n$ matrix with entries as follows: for $1 \\le i \\le n$, $m_{i,i} = 10$; for $1 \\le i \\le n - 1$, $m_{i+1,i} = m_{i,i+1} = 3$; all other entries in $M_n$ are zero. Let $D_n$ be the determinant of matrix $M_n$. Then $\\sum_{n=1}^{\\infty} \\frac{1}{8D_n+1}$ can be represented as $\\frac{p}{q}$, where $p$ and $q$ are relatively prime positive integers. Find $p + q$.\n Note: The determinant of the $1 \\times 1$ matrix $[a]$ is $a$, and the determinant of the $2 \\times 2$ matrix $\\left[ {\\begin{array}{cc} a & b \\\\ c & d \\\\ \\end{array} } \\right] = ad - bc$; for $n \\ge 2$, the determinant of an $n \\times n$ matrix with first row or first column $a_1$ $a_2$ $a_3$ $\\dots$ $a_n$ is equal to $a_1C_1 - a_2C_2 + a_3C_3 - \\dots + (-1)^{n+1}a_nC_n$, where $C_i$ is the determinant of the $(n - 1) \\times (n - 1)$ matrix formed by eliminating the row and column containing $a_i$.",
+        "solution": "\\[D_{1}=\\begin{vmatrix} 10 \\end{vmatrix} = 10, \\quad D_{2}=\\begin{vmatrix} 10 & 3 \\\\ 3 & 10 \\\\ \\end{vmatrix} =(10)(10) - (3)(3) = 91, \\quad D_{3}=\\begin{vmatrix} 10 & 3 & 0 \\\\ 3 & 10 & 3 \\\\ 0 & 3 & 10 \\\\ \\end{vmatrix}.\\] Using the expansionary/recursive definition of determinants (also stated in the problem):\n$D_{3}=\\left| {\\begin{array}{ccc} 10 & 3 & 0 \\\\ 3 & 10 & 3 \\\\ 0 & 3 & 10 \\\\ \\end{array} } \\right|=10\\left| {\\begin{array}{cc} 10 & 3 \\\\ 3 & 10 \\\\ \\end{array} } \\right| - 3\\left| {\\begin{array}{cc} 3 & 3 \\\\ 0 & 10 \\\\ \\end{array} } \\right| + 0\\left| {\\begin{array}{cc} 3 & 10 \\\\ 0 & 3 \\\\ \\end{array} } \\right| = 10D_{2} - 9D_{1} = 820$\n This pattern repeats because the first element in the first row of $M_{n}$ is always 10, the second element is always 3, and the rest are always 0. The ten element directly expands to $10D_{n-1}$. The three element expands to 3 times the determinant of the the matrix formed from omitting the second column and first row from the original matrix. Call this matrix $X_{n}$. $X_{n}$ has a first column entirely of zeros except for the first element, which is a three. A property of matrices is that the determinant can be expanded over the rows instead of the columns (still using the recursive definition as given in the problem), and the determinant found will still be the same. Thus, expanding over this first column yields $3D_{n-2} + 0(\\text{other things})=3D_{n-2}$. Thus, the $3 \\det(X_{n})$ expression turns into $9D_{n-2}$. Thus, the equation $D_{n}=10D_{n-1}-9D_{n-2}$ holds for all n > 2.\n This equation can be rewritten as $D_{n}=10(D_{n-1}-D_{n-2}) + D_{n-2}$. This version of the equation involves the difference of successive terms of a recursive sequence. Calculating $D_{0}$ backwards from the recursive formula and $D_{4}$ from the formula yields $D_{0}=1, D_{4}=7381$. Examining the differences between successive terms, a pattern emerges. $D_{0}=1=9^{0}$, $D_{1}-D_{0}=10-1=9=9^{1}$, $D_{2}-D_{1}=91-10=81=9^{2}$, $D_{3}-D_{2}=820-91=729=9^{3}$, $D_{4}-D_{3}=7381-820=6561=9^{4}$. Thus, $D_{n}=D_{0} + 9^{1}+9^{2}+ . . . +9^{n}=\\sum_{i=0}^{n}9^{i}=\\frac{(1)(9^{n+1}-1)}{9-1}=\\frac{9^{n+1}-1}{8}$.\n Thus, the desired sum is $\\sum_{n=1}^{\\infty}\\frac{1}{8\\frac{9^{n+1}-1}{8}+1}=\\sum_{n=1}^{\\infty}\\frac{1}{9^{n+1}-1+1} = \\sum_{n=1}^{\\infty}\\frac{1}{9^{n+1}}$\n This is an infinite geometric series with first term $\\frac{1}{81}$ and common ratio $\\frac{1}{9}$. Thus, the sum is $\\frac{\\frac{1}{81}}{1-\\frac{1}{9}}=\\frac{\\frac{1}{81}}{\\frac{8}{9}}=\\frac{9}{(81)(8)}=\\frac{1}{(9)(8)}=\\frac{1}{72}$.\n Thus, $p + q = 1 + 72 = \\boxed{073}$.",
+        "answer": "73",
+        "year": 2011,
+        "aime_number": 2,
+        "problem_number": 11,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "For every subset $T$ of $U = \\{ 1,2,3,\\ldots,18 \\}$, let $s(T)$ be the sum of the elements of $T$, with $s(\\emptyset)$ defined to be $0$. If $T$ is chosen at random among all subsets of $U$, the probability that $s(T)$ is divisible by $3$ is $\\frac{m}{n}$, where $m$ and $n$ are relatively prime positive integers. Find $m$.",
+        "solution": "Consider the elements of $U$ modulo $3.$\n Ignore the $0$'s because we're gonna multiply $\\binom{6}{0}+..+\\binom{6}{6}=2^6$ at the end. Let $a$ be the $1's$ and $b$ be the $2's$. The key here is that $2 \\equiv -1 \\pmod{3}$ so the difference between the number of $a$ and $b$ is a multiple of $3$.\n 1. Counted twice because $a$ and $b$ can be switched:\n$6a$\n$6a,3b$\n$5a,2b$\n$4a,b$\n$3a$\n 2. Counted once:\n$6a,6b$ ... $0a,0b$\n By Vandermonde's Identity on the second case, this is $2^6 \\left( 2\\left(1+20+90+90+20\\right) + \\binom{12}{6} \\right)\\implies \\boxed{683}$",
+        "answer": "683",
+        "year": 2018,
+        "aime_number": 1,
+        "problem_number": 12,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "A real number $a$ is chosen randomly and uniformly from the interval $[-20, 18]$. The probability that the roots of the polynomial\n$x^4 + 2ax^3 + (2a - 2)x^2 + (-4a + 3)x - 2$\n are all real can be written in the form $\\dfrac{m}{n}$, where $m$ and $n$ are relatively prime positive integers. Find $m + n$.",
+        "solution": "The polynomial we are given is rather complicated, so we could use Rational Root Theorem to turn the given polynomial into a degree-2 polynomial. With Rational Root Theorem, $x = 1, -1, 2, -2$ are all possible rational roots. Upon plugging these roots into the polynomial, $x = -2$ and $x = 1$ make the polynomial equal 0 and thus, they are roots that we can factor out.\n The polynomial becomes:\n$(x - 1)(x + 2)(x^2 + (2a - 1)x + 1)$\n Since we know $1$ and $-2$ are real numbers, we only need to focus on the quadratic.\n We should set the discriminant of the quadratic greater than or equal to 0.\n$(2a - 1)^2 - 4 \\geq 0$.\n This simplifies to:\n$a \\geq \\dfrac{3}{2}$\n or\n$a \\leq -\\dfrac{1}{2}$\n This means that the interval $\\left(-\\dfrac{1}{2}, \\dfrac{3}{2}\\right)$ is the \"bad\" interval. The length of the interval where $a$ can be chosen from is 38 units long, while the bad interval is 2 units long. Therefore, the \"good\" interval is 36 units long.\n$\\dfrac{36}{38} = \\dfrac{18}{19}$\n$18 + 19 = \\boxed{037}$\n ~First\n ~Shreyas S",
+        "answer": "37",
+        "year": 2018,
+        "aime_number": 2,
+        "problem_number": 6,
+        "difficulty": 6.0
+    },
+    {
+        "problem": "In a Martian civilization, all logarithms whose bases are not specified as assumed to be base $b$, for some fixed $b\\ge2$. A Martian student writes down \\[3\\log(\\sqrt{x}\\log x)=56\\] \\[\\log_{\\log x}(x)=54\\] and finds that this system of equations has a single real number solution $x>1$. Find $b$.",
+        "solution": "Let $y = \\log _{b} x$ Then we have \\[3\\log _{b} (y\\sqrt{x}) = 56\\] \\[\\log _{y} x = 54\\] which gives \\[y^{54} = x\\] Plugging this in gives \\[3\\log _{b} (y \\cdot y^{27}) = 3\\log _{b} y^{28} = 56\\] which gives \\[\\log _{b} y = \\dfrac{2}{3}\\] so \\[b^{2/3} = y\\] By substitution we have \\[b^{36} = x\\] which gives \\[y = \\log _{b} x = 36\\] Plugging in again we get \\[b = 36^{3/2} = \\boxed{216}\\]\n --Hi3142",
+        "answer": "216",
+        "year": 2019,
+        "aime_number": 2,
+        "problem_number": 6,
+        "difficulty": 6.0
+    }
+]
