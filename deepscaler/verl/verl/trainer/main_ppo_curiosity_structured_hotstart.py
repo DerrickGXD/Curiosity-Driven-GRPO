@@ -58,13 +58,13 @@ class RewardManager():
         #     self.output_folder = "/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/train/validation_output"
         #     self.output_filename = f"{self.output_folder}/{output_filename}.json"
 
-        if not os.path.exists(self.output_folder):
-            os.makedirs(self.output_folder)
+        # if not os.path.exists(self.output_folder):
+        #     os.makedirs(self.output_folder)
 
-        print("Output filename", self.output_filename)
+        # print("Output filename", self.output_filename)
 
-        with open(self.output_filename, "w") as f:
-            json.dump({}, f)
+        # with open(self.output_filename, "w") as f:
+        #     json.dump({}, f)
 
         self.bleu_tokenizer = lambda x: self.tokenizer.batch_decode(self.tokenizer(x, return_tensors="pt")["input_ids"][0].unsqueeze(1))
         if config.curiosity.reasoning_pattern_description_penalty_type == "bleu":
