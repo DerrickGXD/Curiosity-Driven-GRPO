@@ -447,7 +447,7 @@ def main_task(config):
         if(prompt_str not in reward_fn.existing_reasoning_pattern):
             reward_fn.existing_reasoning_pattern[prompt_str] = set()
         
-        if(extracted_data["Reasoning Pattern"]!=None and extracted_data["Reasoning Pattern Description"]!=None)
+        if(extracted_data["Reasoning Pattern"]!=None and extracted_data["Reasoning Pattern Description"]!=None):
             reward_fn.reasoning_pattern_description_reward_module.append_reference(prompt_str, extracted_data["Reasoning Pattern Description"], reasoning_pattern=extracted_data["Reasoning Pattern"])
             reward_fn.existing_reasoning_pattern[prompt_str].add(extracted_data["Reasoning Pattern"])
 
