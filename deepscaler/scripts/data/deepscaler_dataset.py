@@ -118,7 +118,6 @@ if __name__ == '__main__':
     # Save training dataset
     print("train data size:", len(train_data))
     train_df = pd.DataFrame(train_data)
-    print('/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/data/train_aime_qwen_original.parquet')
     train_df.to_parquet('/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/data/train_aime_qwen_original.parquet')
 
     # Optionally copy to HDFS
