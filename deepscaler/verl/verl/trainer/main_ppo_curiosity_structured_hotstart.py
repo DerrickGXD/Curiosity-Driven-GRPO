@@ -435,7 +435,7 @@ def main_task(config):
 
 
     # hot start
-    with open("/home/happywwy/Curiosity-Driven-GRPO/deepscaler/scripts/data/hot_start", "r") as f:
+    with open("/home/happywwy/Curiosity-Driven-GRPO/deepscaler/scripts/data/hot_start.json", "r") as f:
         hot_start_data = json.load(f)
 
     hot_start_data = hot_start_data["0"]
