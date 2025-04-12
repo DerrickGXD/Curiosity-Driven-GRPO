@@ -678,8 +678,6 @@ class RayPPOTrainer(object):
             if self.config.trainer.get('val_only', False):
                 return
 
-        exit() #HACK
-
         # we start from step 1
         self.global_steps += 1
 
