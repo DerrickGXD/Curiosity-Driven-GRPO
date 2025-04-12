@@ -195,7 +195,7 @@ class RewardManager():
 
             format_correct = True
             try:
-                extracted_data = self.extract_data(response)
+                extracted_data = self.extract_data(response_str)
             except:
                 format_correct = False
 
@@ -215,9 +215,11 @@ class RewardManager():
 
                 if(prompt_str in self.existing_reasoning_pattern):
                     if reasoning_pattern in self.existing_reasoning_pattern[prompt_str]:
-                        reasoning_pattern_exists = True
+                        reasoning_pattern_exists  = True
                 else:
                     self.existing_reasoning_pattern[prompt_str] = {reasoning_pattern}
+
+                if
 
                 if(reasoning_pattern_exists):
                     #if reasoning pattern exists, then we have to impose a penalty on reasoning pattern description reward module
@@ -244,11 +246,11 @@ class RewardManager():
                         section_len = len(section_tokens)
                         
                         # Search for the section tokens in the whole text, starting from the last position
-                        for i in range(last_position, len(tokens) - section_len + 1):
-                            if tokens[i:i + section_len] == section_tokens:
+                        for j in range(last_position, len(valid_response_ids) - section_len + 1):
+                            if valid_response_ids[j:j + section_len] == section_tokens:
                                 # Found the section, now insert the reward after the last token of the section
                                 if(key=="Reasoning Pattern"):
-                                    last_position = i + section_len  # Update position for next section
+                                    last_position = j + section_len  # Update position for next section
                                     break
                                 else:
                                     reward = section_rewards.get(key, 0)
@@ -258,8 +260,8 @@ class RewardManager():
                                     else:
                                         coef = self.config.curiosity.calculation_reward_coef
 
-                                    reward_tokens[i + section_len - 1] = reward * -1.0 * coef
-                                    last_position = i + section_len  # Update position for next section
+                                    # reward_tokens[j + section_len - 1] = reward * -1.0 * coef
+                                    last_position = j + section_len  # Update position for next section
                                     break
 
                 reward_tokens[-1] = rm_score * self.config.curiosity.answer_reward_coef

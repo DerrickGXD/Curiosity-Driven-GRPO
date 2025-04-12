@@ -111,6 +111,7 @@ def main(config):
         # this is for local ray cluster
         ray.init(runtime_env={'env_vars': {'TOKENIZERS_PARALLELISM': 'true', 'NCCL_DEBUG': 'WARN'}})
 
+    print(ray.cluster_resources())
     ray.get(main_task.remote(config))
 
 

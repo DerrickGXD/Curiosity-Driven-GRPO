@@ -71,6 +71,7 @@ class ResourcePoolManager:
     resource_pool_dict: dict[str, RayResourcePool] = field(default_factory=dict)
 
     def create_resource_pool(self):
+
         for resource_pool_name, process_on_nodes in self.resource_pool_spec.items():
             # max_colocate_count means the number of WorkerGroups (i.e. processes) in each RayResourcePool
             # For FSDP backend, we recommend using max_colocate_count=1 that merge all WorkerGroups into one.
@@ -185,7 +186,7 @@ def compute_data_metrics(batch, use_critic=True):
 
     sequence_rm = batch.batch['token_level_rm']
     sequence_format_correct = batch.batch['token_level_format_correct']
-    sequence_reasoning_pattern_exists = batch.batch['token_level_reasoning_pattern_exists']
+    sequence_reasoning_pattern_reward = batch.batch['token_level_reasoning_pattern_reward']
     sequence_reasoning_pattern_description_reward = batch.batch['token_level_reasoning_pattern_description_reward']
     sequence_calculation_reward_tensor = batch.batch['token_level_calculation_reward_tensor']
 
@@ -245,13 +246,13 @@ def compute_data_metrics(batch, use_critic=True):
             torch.max(sequence_format_correct).detach().item(),
         'critic/format_correct/min':
             torch.min(sequence_format_correct).detach().item(),
-        # reasoning_pattern_exists reward
-        'critic/reasoning_pattern_exists/mean':
-            torch.mean(sequence_reasoning_pattern_exists).detach().item(),
-        'critic/reasoning_pattern_exists/max':
-            torch.max(sequence_reasoning_pattern_exists).detach().item(),
-        'critic/reasoning_pattern_exists/min':
-            torch.min(sequence_reasoning_pattern_exists).detach().item(),
+        # reasoning_pattern_reward reward
+        'critic/reasoning_pattern_reward/mean':
+            torch.mean(sequence_reasoning_pattern_reward).detach().item(),
+        'critic/reasoning_pattern_reward/max':
+            torch.max(sequence_reasoning_pattern_reward).detach().item(),
+        'critic/reasoning_pattern_reward/min':
+            torch.min(sequence_reasoning_pattern_reward).detach().item(),
         # reasoning_pattern_description_reward reward
         'critic/reasoning_pattern_description_reward/mean':
             torch.mean(sequence_reasoning_pattern_description_reward).detach().item(),
@@ -449,11 +450,11 @@ class RayPPOTrainer(object):
 
     def _validate(self, epoch):
         reward_tensor_lst = []
-
         rm_tensor_lst = []
-        bleu_tensor_lst = []
-        cossimemb_tensor_lst = []
-        giberish_tensor_lst = []
+        format_correct_tensor_lst = []
+        reasoning_pattern_reward_tensor_lst = []
+        reasoning_pattern_description_reward_tensor_lst = []
+        calculation_reward_tensor_lst = []
 
         data_source_lst = []
         for test_data in self.val_dataloader:
@@ -489,14 +490,14 @@ class RayPPOTrainer(object):
             # for certain reward function (e.g. sandbox), the generation can overlap with reward
             # reward_tensor = self.val_reward_fn(test_batch) 
 
-            reward_tensor, rm_tensor, bleu_tensor, cossimemb_tensor, giberish_tensor = self.val_reward_fn(test_batch, epoch) #new reward function returns multiple rewards
+            reward_tensor, rm_tensor, format_correct_tensor, reasoning_pattern_reward_tensor, reasoning_pattern_description_reward_tensor, calculation_reward_tensor = self.val_reward_fn(test_batch, epoch) #new reward function returns multiple rewards
 
             reward_tensor_lst.append(reward_tensor)
-
             rm_tensor_lst.append(rm_tensor)
-            bleu_tensor_lst.append(bleu_tensor)
-            cossimemb_tensor_lst.append(cossimemb_tensor)
-            giberish_tensor_lst.append(giberish_tensor)
+            format_correct_tensor_lst.append(format_correct_tensor)
+            reasoning_pattern_reward_tensor_lst.append(reasoning_pattern_reward_tensor)
+            reasoning_pattern_description_reward_tensor_lst.append(reasoning_pattern_description_reward_tensor)
+            calculation_reward_tensor_lst.append(calculation_reward_tensor)
 
             data_source_lst.append(test_batch.non_tensor_batch.get('data_source', ['unknown'] * reward_tensor.shape[0]))
 
@@ -504,26 +505,29 @@ class RayPPOTrainer(object):
         data_sources = np.concatenate(data_source_lst, axis=0)
         # evaluate test_score based on data source
         data_source_reward = {}
-
         data_source_rm = {}
-        data_source_bleu = {}
-        data_source_cossimemb = {}
-        data_source_giberish = {}
+        data_source_format_correct = {}
+        data_source_reasoning_pattern_reward = {}
+        data_source_reasoning_pattern_description_reward = {}
+        data_source_calculation_reward = {}
+
 
         for i in range(reward_tensor.shape[0]):
             data_source = data_sources[i]
             if data_source not in data_source_reward:
                 data_source_reward[data_source] = []
                 data_source_rm[data_source] = []
-                data_source_bleu[data_source] = []
-                data_source_cossimemb[data_source] = []
-                data_source_giberish[data_source] = []
+                data_source_format_correct[data_source] = []
+                data_source_reasoning_pattern_reward[data_source] = []
+                data_source_reasoning_pattern_description_reward[data_source] = []
+                data_source_calculation_reward[data_source] = []
 
             data_source_reward[data_source].append(reward_tensor[i].item())
             data_source_rm[data_source].append(rm_tensor[i].item())
-            data_source_bleu[data_source].append(bleu_tensor[i].item())
-            data_source_cossimemb[data_source].append(cossimemb_tensor[i].item())
-            data_source_giberish[data_source].append(giberish_tensor[i].item())
+            data_source_format_correct[data_source].append(format_correct_tensor[i].item())
+            data_source_reasoning_pattern_reward[data_source].append(reasoning_pattern_reward_tensor[i].item())
+            data_source_reasoning_pattern_description_reward[data_source].append(reasoning_pattern_description_reward_tensor[i].item())
+            data_source_calculation_reward[data_source].append(calculation_reward_tensor[i].item())
 
         metric_dict = {}
         for data_source, rewards in data_source_reward.items():
@@ -532,14 +536,17 @@ class RayPPOTrainer(object):
         for data_source, rm in data_source_rm.items():
             metric_dict[f'val/rm_score/{data_source}'] = np.mean(rm)
 
-        for data_source, bleu in data_source_bleu.items():
-            metric_dict[f'val/bleu_score/{data_source}'] = np.mean(bleu)
+        for data_source, format_correct in data_source_format_correct.items():
+            metric_dict[f'val/format_correct_score/{data_source}'] = np.mean(format_correct)
 
-        for data_source, cossimemb in data_source_cossimemb.items():
-            metric_dict[f'val/cossimemb_score/{data_source}'] = np.mean(cossimemb)
+        for data_source, reasoning_pattern_reward in data_source_reasoning_pattern_reward.items():
+            metric_dict[f'val/reasoning_pattern_reward_score/{data_source}'] = np.mean(reasoning_pattern_reward)
 
-        for data_source, giberish in data_source_giberish.items():
-            metric_dict[f'val/giberish_score/{data_source}'] = np.mean(giberish)
+        for data_source, reasoning_pattern_description_reward in data_source_reasoning_pattern_description_reward.items():
+            metric_dict[f'val/reasoning_pattern_description_reward_score/{data_source}'] = np.mean(reasoning_pattern_description_reward)
+
+        for data_source, calculation_reward in data_source_calculation_reward.items():
+            metric_dict[f'val/calculation_reward_score/{data_source}'] = np.mean(calculation_reward)
 
         return metric_dict
 
@@ -671,6 +678,7 @@ class RayPPOTrainer(object):
             if self.config.trainer.get('val_only', False):
                 return
 
+        exit() #HACK
 
         # we start from step 1
         self.global_steps += 1
@@ -710,12 +718,12 @@ class RayPPOTrainer(object):
                             batch = batch.union(reward_tensor)
 
                         # reward_tensor, rm_tensor, bleu_tensor, cossimemb_tensor, giberish_tensor = self.reward_fn(batch, epoch)
-                        reward_tensor, rm_tensor, format_correct_tensor, reasoning_pattern_exists_tensor, reasoning_pattern_description_reward_tensor, calculation_reward_tensor = self.reward_fn(batch, epoch)
+                        reward_tensor, rm_tensor, format_correct_tensor, reasoning_pattern_reward_tensor, reasoning_pattern_description_reward_tensor, calculation_reward_tensor = self.reward_fn(batch, epoch)
 
                         batch.batch['token_level_scores'] = reward_tensor
                         batch.batch['token_level_rm'] = rm_tensor
                         batch.batch['token_level_format_correct'] = format_correct_tensor
-                        batch.batch['token_level_reasoning_pattern_exists'] = reasoning_pattern_exists_tensor
+                        batch.batch['token_level_reasoning_pattern_reward'] = reasoning_pattern_reward_tensor
                         batch.batch['token_level_reasoning_pattern_description_reward'] = reasoning_pattern_description_reward_tensor
                         batch.batch['token_level_calculation_reward_tensor'] = calculation_reward_tensor
 

@@ -19,15 +19,20 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Set default model path if not provided
+# if [ -z "$MODEL_PATH" ]; then
+#     MODEL_PATH="/data/projects/13003098/derrick/Qwen2.5-7B-Instruct-1M"
+# fi
+
 if [ -z "$MODEL_PATH" ]; then
     MODEL_PATH="Qwen/Qwen2.5-7B-Instruct"
 fi
 
-python3 -m verl.trainer.main_ppo_curiosity_structured \
+
+python3 -m verl.trainer.main_ppo_curiosity_structured_positive \
     algorithm.adv_estimator=grpo \
     data.train_files=/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/data/train_aime_qwen.parquet \
     data.val_files=/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/data/train_aime_qwen.parquet \
-    data.train_batch_size=128 \
+    data.train_batch_size=64 \
     data.val_batch_size=512 \
     data.max_prompt_length=1024 \
     data.max_response_length=8192 \
@@ -36,9 +41,9 @@ python3 -m verl.trainer.main_ppo_curiosity_structured \
     actor_rollout_ref.model.use_remove_padding=True \
     actor_rollout_ref.actor.ppo_mini_batch_size=64 \
     actor_rollout_ref.actor.ppo_micro_batch_size=1 \
-    actor_rollout_ref.actor.use_dynamic_bsz=True \
+    actor_rollout_ref.actor.use_dynamic_bsz=False \
     actor_rollout_ref.actor.ppo_max_token_len_per_gpu=9216 \
-    actor_rollout_ref.actor.use_kl_loss=True \
+    actor_rollout_ref.actor.use_kl_loss=False \
     actor_rollout_ref.actor.kl_loss_coef=0.001 \
     actor_rollout_ref.actor.kl_loss_type=low_var_kl \
     actor_rollout_ref.actor.ulysses_sequence_parallel_size=1 \
@@ -51,8 +56,8 @@ python3 -m verl.trainer.main_ppo_curiosity_structured \
     actor_rollout_ref.rollout.temperature=0.6 \
     actor_rollout_ref.rollout.val_temperature=0.6 \
     actor_rollout_ref.rollout.gpu_memory_utilization=0.7 \
-    actor_rollout_ref.rollout.n=8 \
-    actor_rollout_ref.rollout.n_val=1 \
+    actor_rollout_ref.rollout.n=4 \
+    actor_rollout_ref.rollout.n_val=40 \
     actor_rollout_ref.rollout.max_num_batched_tokens=9216 \
     actor_rollout_ref.ref.fsdp_config.param_offload=True \
     actor_rollout_ref.rollout.enable_chunked_prefill=True \
@@ -61,11 +66,11 @@ python3 -m verl.trainer.main_ppo_curiosity_structured \
     trainer.logger=['console','wandb'] \
     trainer.project_name='Qwen2.5' \
     trainer.experiment_name='Qwen2.5-7B_curiosity_structured' \
-    +trainer.val_before_train=False \
+    +trainer.val_before_train=True \
     trainer.n_gpus_per_node=4 \
-    trainer.nnodes=4 \
-    trainer.save_freq=20 \
+    trainer.nnodes=2 \
+    trainer.save_freq=100000000 \
     trainer.test_freq=100000000 \
     trainer.default_hdfs_dir=null \
-    trainer.total_epochs=30 "${@:1}" \
+    trainer.total_epochs=60 "${@:1}" \
  

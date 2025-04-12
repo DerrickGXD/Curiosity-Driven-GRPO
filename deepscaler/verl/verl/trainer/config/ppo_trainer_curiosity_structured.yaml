@@ -147,10 +147,10 @@ reward_model:
     cossimemb_impl: "huggingface"
     reasoning_pattern_description_penalty_type: "cossimemb"
     calculation_penalty_type: "cossimemb"
+    reasoning_pattern_reward_coef: 0.5
     reasoning_pattern_description_reward_coef: 1.0
     calculation_reward_coef: 1.0
-    format_error_reward_coef: 2.0
-    answer_reward_coef: 2.0
+    answer_reward_coef: 5.0
 
 
 algorithm:

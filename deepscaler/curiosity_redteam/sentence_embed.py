@@ -80,13 +80,15 @@ class CosineSentenceEmbeddingReward(object):
             ref = [ref]
         sentence_embeddings = self._compuate_embeddings(ref).cpu()
         # import ipdb; ipdb.set_trace()
+
         if prompt not in self.sentence_embeddings:
             self.sentence_embeddings[prompt] = {}
         
         if reasoning_pattern not in self.sentence_embeddings:
-            self.sentence_embeddings[prompt][reasoning_pattern] = {}
+            self.sentence_embeddings[prompt][reasoning_pattern] = sentence_embeddings
+        else:
+            self.sentence_embeddings[prompt][reasoning_pattern] = torch.cat([self.sentence_embeddings[prompt][reasoning_pattern], sentence_embeddings], dim=0)
 
-        self.sentence_embeddings[prompt][reasoning_pattern] = torch.cat([self.sentence_embeddings[prompt][reasoning_pattern], sentence_embeddings], dim=0)
 
     def non_reasoning_pattern_append_reference(self, prompt, ref):
         if not isinstance(ref, List):
@@ -100,17 +102,17 @@ class CosineSentenceEmbeddingReward(object):
     
     def append_reference(self, prompt, ref, reasoning_pattern=None):
         if(self.is_reasoning_pattern):
-            return self.reasoning_pattern_append_reference(prompt, hypotheses, reasoning_pattern)
+            return self.reasoning_pattern_append_reference(prompt, ref, reasoning_pattern)
         else:
-            return self.non_reasoning_pattern_append_reference(prompt, hypotheses)
+            return self.non_reasoning_pattern_append_reference(prompt, ref)
 
 
     def reasoning_pattern_call(self, prompt, hypotheses, reasoning_pattern):
         if prompt not in self.sentence_embeddings:
-            return np.zeros(len(hypotheses))
+            return 0.0
 
         if reasoning_pattern not in self.sentence_embeddings[prompt]:
-            return np.zeros(len(hypotheses))
+            return 0.0
 
         hypo_sentence_embeddings = self._compuate_embeddings(hypotheses)
     
@@ -122,12 +124,14 @@ class CosineSentenceEmbeddingReward(object):
             ref_sentence_embeddings = self.sentence_embeddings[prompt][reasoning_pattern]
 
         sims = pairwise_cosine_similarity(hypo_sentence_embeddings, ref_sentence_embeddings)
-        return sims.max(dim=1).cpu().numpy().item()
+        max_sims, _ = torch.max(sims, dim=1)
+
+        return max_sims.cpu().numpy().item()
 
     
     def non_reasoning_pattern_call(self, prompt, hypotheses):
         if prompt not in self.sentence_embeddings:
-            return np.zeros(len(hypotheses))            
+            return 0.0           
         hypo_sentence_embeddings = self._compuate_embeddings(hypotheses)
     
         if self.n_samples > 0:
@@ -138,7 +142,9 @@ class CosineSentenceEmbeddingReward(object):
             ref_sentence_embeddings = self.sentence_embeddings[prompt]
 
         sims = pairwise_cosine_similarity(hypo_sentence_embeddings, ref_sentence_embeddings)
-        return sims.max(dim=1).cpu().numpy().item()
+        max_sims, _ = torch.max(sims, dim=1)
+
+        return max_sims.cpu().numpy().item()
 
     
     def __call__(self, prompt, hypotheses, reasoning_pattern=None):

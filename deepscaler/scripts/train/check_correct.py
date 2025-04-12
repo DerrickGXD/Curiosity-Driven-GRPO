@@ -1,14 +1,15 @@
 import json
 from collections import defaultdict
+import re
 
-train_path = "bs_48_minibs_48_rollout_4_bleu_-1.0_cossimemb_0.0_giberish_0.0_compareanswer_True_ignorerm_False_hybridreward_True.json"
+train_path = "/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/train/train_output/qwen7b_bs_64_rollout_4_reasoningpattern_0.5_reasoningpatterndescription_cossimemb_1.0_calculation_cossimemb_1.0_answer_5.0.json"
 
-dataset_path = "/home/derrick/deepscaler/deepscaler/data/train/aime_6_correct_0.json"
+dataset_path = "/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/deepscaler/data/train/aime_6_correct_0.json"
 
 with open(dataset_path, "r") as f:
     dataset = json.load(f)
 
-with open(f"train_output/{train_path}", "r") as f:
+with open(train_path, "r") as f:
     train_data = json.load(f)
 
 dataset_str_to_id = {}
@@ -20,6 +21,8 @@ data_id_to_answer = {}
 
 specific_id = 1
 
+until_epoch = 11
+
 for i, data in enumerate(dataset):
     dataset_str_to_id[data["problem"]] = i
     data_id_to_correct[i] = []
@@ -28,14 +31,23 @@ for i, data in enumerate(dataset):
     data_id_to_answer[i] = []
 
 for key in train_data:
+    if(int(key)>until_epoch):
+        break
+
     epoch_id_to_correct = defaultdict(int)
     epoch_id_to_bleu = defaultdict(list)
     epoch_id_to_response = defaultdict(list)
     epoch_id_to_answer = defaultdict(list)
 
+
     for data in train_data[key]:
-        clean_prompt = data["prompt"].replace("<｜begin▁of▁sentence｜><｜User｜>", "").replace("Let's think in not more than 500 words and output the final answer within \\boxed{}. Please keep your reasoning no more than 500 words and output the final answer after that.<｜Assistant｜><think>\n", "").strip()
-        # clean_prompt = data["prompt"].replace("<｜begin▁of▁sentence｜><｜User｜>", "").replace("Let's think step by step and output the final answer within \\boxed{}.<｜Assistant｜><think>\n", "").strip()
+        # clean_prompt = data["prompt"].replace("<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\n", "")
+        # clean_prompt = clean_prompt.split('Let\'s think step by step')[0].strip()
+
+        match = re.search(r'Problem\s*:\s*(.*)', data["prompt"], re.DOTALL)
+        clean_prompt = match.group(1).strip()
+        clean_prompt = clean_prompt.split('<|im_end|>')[0].strip()
+
         data_id = dataset_str_to_id[clean_prompt]
 
         response = data["response"]
@@ -45,9 +57,9 @@ for key in train_data:
         else:
             epoch_id_to_correct[data_id] += 0
 
-        epoch_id_to_bleu[data_id].append(data["score"]["bleu_score"])
-        epoch_id_to_response[data_id].append(data["response"])
-        epoch_id_to_answer[data_id].append(data["extract_answer"])
+        # epoch_id_to_bleu[data_id].append(data["score"]["bleu_score"])
+        # epoch_id_to_response[data_id].append(data["response"])
+        # epoch_id_to_answer[data_id].append(data["extract_answer"])
 
     for idx in epoch_id_to_correct:
         data_id_to_correct[idx].append(epoch_id_to_correct[idx])
@@ -66,17 +78,15 @@ for key in train_data:
 #     data_id_to_bleu[idx] = [sum(x) for x in data_id_to_bleu[idx]]
 # print(data_id_to_bleu)
 
-print(data_id_to_answer[0])
-
 # print(len(data_id_to_correct))
 
-# questions_with_one_correct_answer = 0
+questions_with_one_correct_answer = 0
 
-# for x in data_id_to_correct:
-#     if(sum(data_id_to_correct[x])>0):
-#         questions_with_one_correct_answer += 1
+for x in data_id_to_correct:
+    if(sum(data_id_to_correct[x])>0):
+        questions_with_one_correct_answer += 1
 
-# print(f"{questions_with_one_correct_answer} QUESTIONS WITH ONE EXPLORED CORRECT ANSWER")
+print(f"{questions_with_one_correct_answer} QUESTIONS WITH ONE EXPLORED CORRECT ANSWER")
 
 
 # epoch_taken_to_get_correct_answer = []

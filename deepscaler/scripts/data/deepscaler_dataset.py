@@ -40,19 +40,21 @@ def make_map_fn(split: str):
     """
     def process_fn(example: Dict[str, Any], idx: int) -> Optional[Dict[str, Any]]:
         question = example.pop('problem')
-        # instruction = "Let's think step by step and output the final answer within \\boxed{}."
-        with open("prompt_ans.txt", "r") as f:
-            prompt_template = f.read()
+        instruction = "Let's think step by step and output the final answer within \\boxed{}."
+        # with open("prompt_ans.txt", "r") as f:
+        #     prompt_template = f.read()
 
-        content = prompt_template.replace("<problem>", question)
+        # content = prompt_template.replace("<problem>", question)
 
         answer = example.pop('answer')
+
+        content = f"{question} {instruction}"
 
         data = {
             "data_source": "",
             "prompt": [{
                 "role": "user",
-                "content": question
+                "content": content
             }],
             "ability": "math",
             "reward_model": {
@@ -116,8 +118,8 @@ if __name__ == '__main__':
     # Save training dataset
     print("train data size:", len(train_data))
     train_df = pd.DataFrame(train_data)
-    print('/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/data/train_aime_qwen.parquet')
-    train_df.to_parquet('/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/data/train_aime_qwen.parquet')
+    print('/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/data/train_aime_qwen_original.parquet')
+    train_df.to_parquet('/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/data/train_aime_qwen_original.parquet')
 
     # Optionally copy to HDFS
     if hdfs_dir is not None:

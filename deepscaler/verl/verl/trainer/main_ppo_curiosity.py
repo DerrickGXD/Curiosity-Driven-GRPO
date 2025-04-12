@@ -90,7 +90,8 @@ class RewardManager():
         bleu = self.config.curiosity.bleu_reward_coef * bleu_score
         cossimemb = self.config.curiosity.cossimemb_reward_coef * cossimemb_score
         giberish = self.config.curiosity.giberish_penalty_coef * giberish_score
-        return rm_score + bleu + cossimemb + giberish
+        # return rm_score + bleu + cossimemb + giberish
+        return rm_score
 
 
 
