@@ -24,7 +24,7 @@ done
 # fi
 
 if [ -z "$MODEL_PATH" ]; then
-    MODEL_PATH="Qwen/Qwen2.5-7B-Instruct"
+    MODEL_PATH="/home/happywwy/Qwen2.5-7B-Instruct"
 fi
 
 
