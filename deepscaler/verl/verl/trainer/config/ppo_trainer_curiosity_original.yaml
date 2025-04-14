@@ -83,7 +83,7 @@ actor_rollout_ref:
     do_sample: True
     # number of responses (i.e. num sample times)
     n: 1 # > 1 for grpo
-    n_val: 8
+    n_val: 4
 
 critic:
   strategy: fsdp
@@ -177,4 +177,4 @@ trainer:
   critic_warmup: 0
   default_hdfs_dir: null #~/experiments/gsm8k/ppo/${trainer.experiment_name}
   default_local_dir: checkpoints/${trainer.project_name}/${trainer.experiment_name}
-  val_only: True
+  val_only: False

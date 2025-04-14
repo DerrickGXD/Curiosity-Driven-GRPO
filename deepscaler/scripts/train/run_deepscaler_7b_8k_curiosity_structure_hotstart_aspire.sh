@@ -24,16 +24,16 @@ done
 # fi
 
 if [ -z "$MODEL_PATH" ]; then
-    MODEL_PATH="/home/happywwy/Qwen2.5-7B-Instruct"
+    MODEL_PATH="Qwen/Qwen2.5-7B-Instruct"
 fi
 
 
 python3 -m verl.trainer.main_ppo_curiosity_structured_hotstart \
     algorithm.adv_estimator=grpo \
-    data.train_files=/home/happywwy/Curiosity-Driven-GRPO/deepscaler/scripts/data/train_aime_qwen.parquet \
-    data.val_files=/home/happywwy/Curiosity-Driven-GRPO/deepscaler/scripts/data/train_aime_qwen.parquet \
+    data.train_files=/export/home2/gohx0043/Curiosity-Driven-GRPO/deepscaler/scripts/data/train_aime_qwen.parquet \
+    data.val_files=/export/home2/gohx0043/Curiosity-Driven-GRPO/deepscaler/scripts/data/train_aime_qwen.parquet \
     data.train_batch_size=64 \
-    data.val_batch_size=512 \
+    data.val_batch_size=64 \
     data.max_prompt_length=1024 \
     data.max_response_length=8192 \
     actor_rollout_ref.model.path=$MODEL_PATH  \
@@ -57,20 +57,20 @@ python3 -m verl.trainer.main_ppo_curiosity_structured_hotstart \
     actor_rollout_ref.rollout.val_temperature=0.6 \
     actor_rollout_ref.rollout.gpu_memory_utilization=0.7 \
     actor_rollout_ref.rollout.n=4 \
-    actor_rollout_ref.rollout.n_val=40 \
+    actor_rollout_ref.rollout.n_val=4 \
     actor_rollout_ref.rollout.max_num_batched_tokens=9216 \
     actor_rollout_ref.ref.fsdp_config.param_offload=True \
     actor_rollout_ref.rollout.enable_chunked_prefill=True \
     algorithm.kl_ctrl.kl_coef=0.001 \
     trainer.critic_warmup=0 \
     trainer.logger=['console','wandb'] \
-    trainer.project_name='Qwen2.5' \
+    trainer.project_name='Qwen2.5_Curiosity' \
     trainer.experiment_name='Qwen2.5-7B_curiosity_structured_hotstart' \
     +trainer.val_before_train=True \
-    trainer.n_gpus_per_node=4 \
-    trainer.nnodes=1 \
+    trainer.n_gpus_per_node=8 \
+    trainer.nnodes=2 \
     trainer.save_freq=100000000 \
-    trainer.test_freq=100000000 \
+    trainer.test_freq=20 \
     trainer.default_hdfs_dir=null \
     trainer.total_epochs=60 "${@:1}" \
  

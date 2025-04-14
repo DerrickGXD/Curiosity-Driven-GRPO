@@ -58,13 +58,19 @@ class RewardManager():
         #     self.output_folder = "/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/train/validation_output"
         #     self.output_filename = f"{self.output_folder}/{output_filename}.json"
 
-        # if not os.path.exists(self.output_folder):
-        #     os.makedirs(self.output_folder)
+        self.prompt_with_correct_answer = {}
 
-        # print("Output filename", self.output_filename)
+        if(num_examine==1):
+            self.output_folder = "/export/home2/gohx0043/Curiosity-Driven-GRPO/deepscaler/scripts/validation_output"
+            self.output_filename = f"{self.output_folder}/{output_filename}.json"
 
-        # with open(self.output_filename, "w") as f:
-        #     json.dump({}, f)
+            if not os.path.exists(self.output_folder):
+                os.makedirs(self.output_folder)
+
+            print("Output filename", self.output_filename)
+
+            with open(self.output_filename, "w") as f:
+                json.dump({}, f)
 
         self.bleu_tokenizer = lambda x: self.tokenizer.batch_decode(self.tokenizer(x, return_tensors="pt")["input_ids"][0].unsqueeze(1))
         if config.curiosity.reasoning_pattern_description_penalty_type == "bleu":
@@ -295,7 +301,9 @@ class RewardManager():
                             "reasoning_pattern_reward": reasoning_pattern_reward,
                             "reasoning_pattern_description_reward" : reasoning_pattern_description_reward, 
                             "calculation_reward": calculation_reward          
-                        }            
+                        }        
+
+                
 
             return i, reward_tokens, valid_response_length, score_dict, prompt_str, response_str, extract_answer, extracted_data, reasoning_pattern
 
@@ -306,6 +314,9 @@ class RewardManager():
 
         data_list = []
         # Fill reward tensor with results
+
+        batch_prompt_with_correct_answer = {}
+
         for i, reward_tokens, valid_response_length, score_dict, prompt_str, response_str, extract_answer, extracted_data, reasoning_pattern in results:
             reward_tensor[i, :valid_response_length] = reward_tokens
             rm_tensor[i] = score_dict["rm_score"]
@@ -314,8 +325,19 @@ class RewardManager():
             reasoning_pattern_description_reward_tensor[i] = score_dict["reasoning_pattern_description_reward"]
             calculation_reward_tensor[i] = score_dict["calculation_reward"]
 
+            # Calculate exploration effectiveness
+            if(prompt_str not in self.prompt_with_correct_answer):
+                self.prompt_with_correct_answer[prompt_str] = 0
+            
+            if(prompt_str not in batch_prompt_with_correct_answer):
+                batch_prompt_with_correct_answer[prompt_str] = 0
 
-            if self.num_examine == 0 and extracted_data!=None:
+            if(rm_tensor[i] == 1.0):
+                self.prompt_with_correct_answer[prompt_str] = 1
+                batch_prompt_with_correct_answer[prompt_str] = 1
+            # End of calculation
+
+            if extracted_data!=None:
                 if reasoning_pattern != None and extracted_data["Reasoning Pattern Description"] != None:
                     self.existing_reasoning_pattern[prompt_str].add(reasoning_pattern)
                     self.reasoning_pattern_description_reward_module.append_reference(prompt_str, extracted_data["Reasoning Pattern Description"], reasoning_pattern=reasoning_pattern)
@@ -325,22 +347,25 @@ class RewardManager():
 
             extracted_data["Reasoning Pattern"] = reasoning_pattern
 
-            
             new_data = {"prompt": prompt_str, "response": response_str, "extract_answer": extract_answer, "score": score_dict, "extracted_data": extracted_data}
             data_list.append(new_data)
 
-        
-        # with open(self.output_filename, "r") as f:
-        #     data_json = json.load(f)
-        
-        # data_json[self.epoch] = data_list
+        if(self.num_examine==1):
+            with open(self.output_filename, "r") as f:
+                data_json = json.load(f)
+            
+            data_json[self.epoch] = data_list
 
-        # with open(self.output_filename, "w") as f:
-        #     json.dump(data_json, f, indent=4, ensure_ascii=False)
+            with open(self.output_filename, "w") as f:
+                json.dump(data_json, f, indent=4, ensure_ascii=False)
 
         self.epoch += 1
 
-        return reward_tensor, rm_tensor, format_correct_tensor, reasoning_pattern_reward_tensor, reasoning_pattern_description_reward_tensor, calculation_reward_tensor
+        total_prompt_with_correct_answer = sum(self.prompt_with_correct_answer.values())
+        top_n = sum(batch_prompt_with_correct_answer.values()) / len(batch_prompt_with_correct_answer)
+
+
+        return reward_tensor, rm_tensor, format_correct_tensor, reasoning_pattern_reward_tensor, reasoning_pattern_description_reward_tensor, calculation_reward_tensor, total_prompt_with_correct_answer, top_n
 
 
 import ray
@@ -351,7 +376,7 @@ import json
 def main(config):
     if not ray.is_initialized():
         # this is for local ray cluster
-        ray.init(runtime_env={'env_vars': {'TOKENIZERS_PARALLELISM': 'true', 'NCCL_DEBUG': 'WARN'}}, _temp_dir='/tmp/ray')
+        ray.init(runtime_env={'env_vars': {'TOKENIZERS_PARALLELISM': 'true', 'NCCL_DEBUG': 'WARN'}})
 
     print(ray.cluster_resources())
     ray.get(main_task.remote(config))
@@ -435,7 +460,7 @@ def main_task(config):
 
 
     # hot start
-    with open("/home/happywwy/Curiosity-Driven-GRPO/deepscaler/scripts/data/hot_start.json", "r") as f:
+    with open("/export/home2/gohx0043/Curiosity-Driven-GRPO/deepscaler/scripts/data/hot_start.json", "r") as f:
         hot_start_data = json.load(f)
 
     hot_start_data = hot_start_data["0"]
@@ -450,6 +475,9 @@ def main_task(config):
         if(extracted_data["Reasoning Pattern"]!=None and extracted_data["Reasoning Pattern Description"]!=None):
             reward_fn.reasoning_pattern_description_reward_module.append_reference(prompt_str, extracted_data["Reasoning Pattern Description"], reasoning_pattern=extracted_data["Reasoning Pattern"])
             reward_fn.existing_reasoning_pattern[prompt_str].add(extracted_data["Reasoning Pattern"])
+
+        if(extracted_data["Calculation"]!=None):
+            reward_fn.calculation_reward_module.append_reference(prompt_str, extracted_data["Calculation"])
 
     # end of hot start
 

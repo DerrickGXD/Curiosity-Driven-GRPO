@@ -51,20 +51,26 @@ class RewardManager():
 
         self.epoch = 0
 
-        if(num_examine==0):
-            self.output_folder = "/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/train/train_output"
+        # if(num_examine==0):
+        #     self.output_folder = "/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/train/train_output"
+        #     self.output_filename = f"{self.output_folder}/{output_filename}.json"
+        # else:
+        #     self.output_folder = "/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/train/validation_output"
+        #     self.output_filename = f"{self.output_folder}/{output_filename}.json"
+
+        self.prompt_with_correct_answer = {}
+
+        if(num_examine==1):
+            self.output_folder = "/export/home2/gohx0043/Curiosity-Driven-GRPO/deepscaler/scripts/validation_output"
             self.output_filename = f"{self.output_folder}/{output_filename}.json"
-        else:
-            self.output_folder = "/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/train/validation_output"
-            self.output_filename = f"{self.output_folder}/{output_filename}.json"
 
-        if not os.path.exists(self.output_folder):
-            os.makedirs(self.output_folder)
+            if not os.path.exists(self.output_folder):
+                os.makedirs(self.output_folder)
 
-        print("Output filename", self.output_filename)
+            print("Output filename", self.output_filename)
 
-        with open(self.output_filename, "w") as f:
-            json.dump({}, f)
+            with open(self.output_filename, "w") as f:
+                json.dump({}, f)
 
 
     def extract_data(self, response):
@@ -190,6 +196,9 @@ class RewardManager():
 
         data_list = []
         # Fill reward tensor with results
+
+        batch_prompt_with_correct_answer = {}
+
         for i, reward_tokens, valid_response_length, score_dict, prompt_str, response_str, extract_answer, extracted_data in results:
             reward_tensor[i, :valid_response_length] = reward_tokens
             rm_tensor[i] = score_dict["rm_score"]
@@ -197,22 +206,39 @@ class RewardManager():
             reasoning_pattern_reward_tensor[i] = score_dict["reasoning_pattern_reward"]
             reasoning_pattern_description_reward_tensor[i] = score_dict["reasoning_pattern_description_reward"]
             calculation_reward_tensor[i] = score_dict["calculation_reward"]
+
+            # Calculate exploration effectiveness
+            if(prompt_str not in self.prompt_with_correct_answer):
+                self.prompt_with_correct_answer[prompt_str] = 0
+            
+            if(prompt_str not in batch_prompt_with_correct_answer):
+                batch_prompt_with_correct_answer[prompt_str] = 0
+
+            if(rm_tensor[i] == 1.0):
+                self.prompt_with_correct_answer[prompt_str] = 1
+                batch_prompt_with_correct_answer[prompt_str] = 1
+            # End of calculation
+
             
             new_data = {"prompt": prompt_str, "response": response_str, "extract_answer": extract_answer, "score": score_dict}
             data_list.append(new_data)
 
         
-        with open(self.output_filename, "r") as f:
-            data_json = json.load(f)
-        
-        data_json[self.epoch] = data_list
+        if(self.num_examine==1):
+            with open(self.output_filename, "r") as f:
+                data_json = json.load(f)
+            
+            data_json[self.epoch] = data_list
 
-        with open(self.output_filename, "w") as f:
-            json.dump(data_json, f, indent=4, ensure_ascii=False)
+            with open(self.output_filename, "w") as f:
+                json.dump(data_json, f, indent=4, ensure_ascii=False)
 
         self.epoch += 1
 
-        return reward_tensor, rm_tensor, format_correct_tensor, reasoning_pattern_reward_tensor, reasoning_pattern_description_reward_tensor, calculation_reward_tensor
+        total_prompt_with_correct_answer = sum(self.prompt_with_correct_answer.values())
+        top_n = sum(batch_prompt_with_correct_answer.values()) / len(batch_prompt_with_correct_answer)
+
+        return reward_tensor, rm_tensor, format_correct_tensor, reasoning_pattern_reward_tensor, reasoning_pattern_description_reward_tensor, calculation_reward_tensor, total_prompt_with_correct_answer, top_n
 
 
 import ray

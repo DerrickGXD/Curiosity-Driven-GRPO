@@ -190,6 +190,9 @@ def compute_data_metrics(batch, use_critic=True):
     sequence_reasoning_pattern_description_reward = batch.batch['token_level_reasoning_pattern_description_reward']
     sequence_calculation_reward_tensor = batch.batch['token_level_calculation_reward_tensor']
 
+    total_prompt_with_correct_answer_tensor = batch.batch['total_prompt_with_correct_answer']
+    top_n_tensor = batch.batch['top_n']
+
 
     advantages = batch.batch['advantages']
     returns = batch.batch['returns']
@@ -218,6 +221,11 @@ def compute_data_metrics(batch, use_critic=True):
     sequence_calculation_reward_tensor = batch.batch['token_level_calculation_reward_tensor']
 
     metrics = {
+        # exploration
+        'critic/exploration/total_prompt_with_correct_answer':
+            torch.mean(total_prompt_with_correct_answer_tensor).item(),
+        'critic/exploration/top_n':
+            torch.mean(top_n_tensor).item(),
         # score
         'critic/score/mean':
             torch.mean(sequence_score).detach().item(),
@@ -455,6 +463,8 @@ class RayPPOTrainer(object):
         reasoning_pattern_reward_tensor_lst = []
         reasoning_pattern_description_reward_tensor_lst = []
         calculation_reward_tensor_lst = []
+        total_prompt_with_correct_answer_lst = []
+        top_n_lst = []
 
         data_source_lst = []
         for test_data in self.val_dataloader:
@@ -490,7 +500,10 @@ class RayPPOTrainer(object):
             # for certain reward function (e.g. sandbox), the generation can overlap with reward
             # reward_tensor = self.val_reward_fn(test_batch) 
 
-            reward_tensor, rm_tensor, format_correct_tensor, reasoning_pattern_reward_tensor, reasoning_pattern_description_reward_tensor, calculation_reward_tensor = self.val_reward_fn(test_batch, epoch) #new reward function returns multiple rewards
+            reward_tensor, rm_tensor, format_correct_tensor, reasoning_pattern_reward_tensor, reasoning_pattern_description_reward_tensor, calculation_reward_tensor, total_prompt_with_correct_answer, top_n = self.val_reward_fn(test_batch, epoch) #new reward function returns multiple rewards
+
+            total_prompt_with_correct_answer_tensor = torch.ones_like(rm_tensor) * total_prompt_with_correct_answer
+            top_n_tensor = torch.ones_like(rm_tensor) * top_n
 
             reward_tensor_lst.append(reward_tensor)
             rm_tensor_lst.append(rm_tensor)
@@ -498,8 +511,11 @@ class RayPPOTrainer(object):
             reasoning_pattern_reward_tensor_lst.append(reasoning_pattern_reward_tensor)
             reasoning_pattern_description_reward_tensor_lst.append(reasoning_pattern_description_reward_tensor)
             calculation_reward_tensor_lst.append(calculation_reward_tensor)
+            total_prompt_with_correct_answer_lst.append(total_prompt_with_correct_answer_tensor)
+            top_n_lst.append(top_n_tensor)
 
             data_source_lst.append(test_batch.non_tensor_batch.get('data_source', ['unknown'] * reward_tensor.shape[0]))
+
 
         reward_tensor = torch.cat(reward_tensor_lst, dim=0).sum(-1).cpu()  # (batch_size,)
         data_sources = np.concatenate(data_source_lst, axis=0)
@@ -511,6 +527,9 @@ class RayPPOTrainer(object):
         data_source_reasoning_pattern_description_reward = {}
         data_source_calculation_reward = {}
 
+        data_source_total_prompt_with_correct_answer = {}
+        data_source_top_n = {}
+
 
         for i in range(reward_tensor.shape[0]):
             data_source = data_sources[i]
@@ -521,6 +540,8 @@ class RayPPOTrainer(object):
                 data_source_reasoning_pattern_reward[data_source] = []
                 data_source_reasoning_pattern_description_reward[data_source] = []
                 data_source_calculation_reward[data_source] = []
+                data_source_total_prompt_with_correct_answer[data_source] = []
+                data_source_top_n[data_source] = []
 
             data_source_reward[data_source].append(reward_tensor[i].item())
             data_source_rm[data_source].append(rm_tensor[i].item())
@@ -528,6 +549,8 @@ class RayPPOTrainer(object):
             data_source_reasoning_pattern_reward[data_source].append(reasoning_pattern_reward_tensor[i].item())
             data_source_reasoning_pattern_description_reward[data_source].append(reasoning_pattern_description_reward_tensor[i].item())
             data_source_calculation_reward[data_source].append(calculation_reward_tensor[i].item())
+            data_source_total_prompt_with_correct_answer[data_source].append(total_prompt_with_correct_answer_tensor[i].item())
+            data_source_top_n[data_source].append(top_n_tensor[i].item())
 
         metric_dict = {}
         for data_source, rewards in data_source_reward.items():
@@ -547,6 +570,18 @@ class RayPPOTrainer(object):
 
         for data_source, calculation_reward in data_source_calculation_reward.items():
             metric_dict[f'val/calculation_reward_score/{data_source}'] = np.mean(calculation_reward)
+
+        for data_source, total_prompt_with_correct_answer in data_source_total_prompt_with_correct_answer.items():
+            metric_dict[f'val/total_prompt_with_correct_answer/{data_source}'] = np.mean(total_prompt_with_correct_answer)
+
+        for data_source, top_n in data_source_top_n.items():
+            metric_dict[f'val/top_n/{data_source}'] = np.mean(top_n)
+
+        for data_source, calculation_reward in data_source_calculation_reward.items():
+            reasoning_pattern_reward = data_source_reasoning_pattern_reward[data_source]
+            reasoning_pattern_description_reward = data_source_reasoning_pattern_description_reward[data_source]
+            total_curiosity_reward = reasoning_pattern_reward + reasoning_pattern_description_reward + calculation_reward
+            metric_dict[f'val/curiosity_reward_score/{data_source}'] = np.mean(total_curiosity_reward)
 
         return metric_dict
 
@@ -716,7 +751,7 @@ class RayPPOTrainer(object):
                             batch = batch.union(reward_tensor)
 
                         # reward_tensor, rm_tensor, bleu_tensor, cossimemb_tensor, giberish_tensor = self.reward_fn(batch, epoch)
-                        reward_tensor, rm_tensor, format_correct_tensor, reasoning_pattern_reward_tensor, reasoning_pattern_description_reward_tensor, calculation_reward_tensor = self.reward_fn(batch, epoch)
+                        reward_tensor, rm_tensor, format_correct_tensor, reasoning_pattern_reward_tensor, reasoning_pattern_description_reward_tensor, calculation_reward_tensor, total_prompt_with_correct_answer, top_n = self.reward_fn(batch, epoch)
 
                         batch.batch['token_level_scores'] = reward_tensor
                         batch.batch['token_level_rm'] = rm_tensor
@@ -724,6 +759,12 @@ class RayPPOTrainer(object):
                         batch.batch['token_level_reasoning_pattern_reward'] = reasoning_pattern_reward_tensor
                         batch.batch['token_level_reasoning_pattern_description_reward'] = reasoning_pattern_description_reward_tensor
                         batch.batch['token_level_calculation_reward_tensor'] = calculation_reward_tensor
+
+                        total_prompt_with_correct_answer_tensor = torch.ones_like(rm_tensor) * total_prompt_with_correct_answer
+                        top_n_tensor = torch.ones_like(rm_tensor) * top_n
+
+                        batch.batch['total_prompt_with_correct_answer'] = total_prompt_with_correct_answer_tensor
+                        batch.batch['top_n'] = top_n_tensor
 
                         # Rejection sampling based on rewards
                         # Group rewards by uid
