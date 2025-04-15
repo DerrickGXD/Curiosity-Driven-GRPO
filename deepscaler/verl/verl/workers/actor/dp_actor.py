@@ -216,7 +216,7 @@ class DataParallelPPOActor(BasePPOActor):
         self.gradient_accumulation = self.config.ppo_mini_batch_size // self.config.ppo_micro_batch_size
         temperature = data.meta_info['temperature']  # temperature must be in the data.meta_info to avoid slient error
 
-        select_keys = ['responses', 'input_ids', 'attention_mask', 'position_ids', 'old_log_probs', 'advantages']
+        select_keys = ['responses', 'input_ids', 'attention_mask', 'position_ids', 'old_log_probs', 'advantages', 'si_ratio']
         if self.config.use_kl_loss:
             select_keys.append('ref_log_prob')
         batch = data.select(batch_keys=select_keys).batch
@@ -248,6 +248,8 @@ class DataParallelPPOActor(BasePPOActor):
                     old_log_prob = data['old_log_probs']
                     advantages = data['advantages']
 
+                    si_ratio = data["si_ratio"]
+
                     clip_ratio = self.config.clip_ratio
                     entropy_coeff = self.config.entropy_coeff
 
@@ -257,7 +259,7 @@ class DataParallelPPOActor(BasePPOActor):
                                                                                 log_prob=log_prob,
                                                                                 advantages=advantages,
                                                                                 eos_mask=response_mask,
-                                                                                cliprange=clip_ratio)
+                                                                                cliprange=clip_ratio, si_ratio=si_ratio)
                     # compute entropy loss from entropy
                     entropy_loss = verl_F.masked_mean(entropy, response_mask)
 

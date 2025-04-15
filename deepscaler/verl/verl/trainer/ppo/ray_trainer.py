@@ -849,6 +849,15 @@ class RayPPOTrainer(object):
                         batch.batch['token_level_rewards'] = batch.batch['token_level_scores']
 
                         # compute advantages, executed on the driver process
+
+                        si_coef = self.config.reward_model.curiosity.get("si_coef", 1)
+
+                        si_ratio = rm_tensor.clone()
+                        si_ratio[rm_tensor==0.0] = 1
+                        si_ratio[rm_tensor==1.0] = si_coef
+
+                        batch.batch['si_ratio'] = si_ratio
+
                         batch = compute_advantage(batch,
                                                   adv_estimator=self.config.algorithm.adv_estimator,
                                                   gamma=self.config.algorithm.gamma,
