@@ -65,7 +65,7 @@ python3 -m verl.trainer.main_ppo_curiosity_structured_hotstart \
     trainer.critic_warmup=0 \
     trainer.logger=['console','wandb'] \
     trainer.project_name='Qwen2.5_Curiosity' \
-    trainer.experiment_name='Qwen2.5-7B_curiosity_structured_hotstart' \
+    trainer.experiment_name='Qwen2.5-7B_curiosity_structured_hotstart_rerun' \
     +trainer.val_before_train=True \
     trainer.n_gpus_per_node=8 \
     trainer.nnodes=2 \

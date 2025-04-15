@@ -453,7 +453,7 @@ def main_task(config):
 
     # Note that we always use function-based RM for validation
 
-    filename_parameters = f"qwen7b_bs_{config.data.train_batch_size}_rollout_{config.actor_rollout_ref.rollout.n}_reasoningpattern_{config.reward_model.curiosity.reasoning_pattern_reward_coef}_reasoningpatterndescription_{config.reward_model.curiosity.reasoning_pattern_description_penalty_type}_{config.reward_model.curiosity.reasoning_pattern_description_reward_coef}_calculation_{config.reward_model.curiosity.calculation_penalty_type}_{config.reward_model.curiosity.calculation_reward_coef}_answer_{config.reward_model.curiosity.answer_reward_coef}"
+    filename_parameters = f"qwen7b_bs_{config.data.train_batch_size}_rollout_{config.actor_rollout_ref.rollout.n}_reasoningpattern_{config.reward_model.curiosity.reasoning_pattern_reward_coef}_reasoningpatterndescription_{config.reward_model.curiosity.reasoning_pattern_description_penalty_type}_{config.reward_model.curiosity.reasoning_pattern_description_reward_coef}_calculation_{config.reward_model.curiosity.calculation_penalty_type}_{config.reward_model.curiosity.calculation_reward_coef}_answer_{config.reward_model.curiosity.answer_reward_coef}_rerun"
 
     reward_fn = RewardManager(tokenizer=tokenizer, num_examine=0, config=config.reward_model, output_filename=filename_parameters)
     val_reward_fn = RewardManager(tokenizer=tokenizer, num_examine=1, config=config.reward_model, output_filename=filename_parameters)

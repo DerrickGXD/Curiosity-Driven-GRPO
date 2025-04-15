@@ -30,8 +30,8 @@ fi
 
 python3 -m verl.trainer.main_ppo_curiosity_structured_hotstart_formatpriority \
     algorithm.adv_estimator=grpo \
-    data.train_files=/export/home2/gohx0043/Curiosity-Driven-GRPO/deepscaler/scripts/data/train_aime_qwen.parquet \
-    data.val_files=/export/home2/gohx0043/Curiosity-Driven-GRPO/deepscaler/scripts/data/train_aime_qwen.parquet \
+    data.train_files=/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/data/train_aime_qwen.parquet \
+    data.val_files=/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/data/train_aime_qwen.parquet \
     data.train_batch_size=64 \
     data.val_batch_size=64 \
     data.max_prompt_length=1024 \
@@ -65,10 +65,10 @@ python3 -m verl.trainer.main_ppo_curiosity_structured_hotstart_formatpriority \
     trainer.critic_warmup=0 \
     trainer.logger=['console','wandb'] \
     trainer.project_name='Qwen2.5_Curiosity' \
-    trainer.experiment_name='Qwen2.5-7B_curiosity_structured_hotstart_formatpriority' \
+    trainer.experiment_name='Qwen2.5-7B_curiosity_structured_hotstart_formatpriority_newcoeff_rerun' \
     +trainer.val_before_train=False \
-    trainer.n_gpus_per_node=8 \
-    trainer.nnodes=2 \
+    trainer.n_gpus_per_node=4 \
+    trainer.nnodes=4 \
     trainer.save_freq=100000000 \
     trainer.test_freq=20 \
     trainer.default_hdfs_dir=null \

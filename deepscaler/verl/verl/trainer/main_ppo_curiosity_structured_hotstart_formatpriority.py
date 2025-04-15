@@ -61,7 +61,7 @@ class RewardManager():
         self.prompt_with_correct_answer = {}
 
         if(num_examine==1):
-            self.output_folder = "/export/home2/gohx0043/Curiosity-Driven-GRPO/deepscaler/scripts/validation_output"
+            self.output_folder = "/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/validation_output"
             self.output_filename = f"{self.output_folder}/{output_filename}.json"
 
             if not os.path.exists(self.output_folder):
@@ -211,25 +211,20 @@ class RewardManager():
 
             section_penalty = {}
 
-            if(format_correct):
-                if extracted_data["Reasoning Pattern"]!=None:
-                    reasoning_pattern = self.validate_and_preprocess_chain(extracted_data["Reasoning Pattern"])
-                    # no valid reasoning pattern, reasoning pattern description will be invalid, so no reward for both reasoning pattern and reasoning pattern
-                    if(reasoning_pattern==None):
-                        extracted_data["Reasoning Pattern Description"] = None
-                        section_penalty["Reasoning Pattern"] = 1.0
-                    else:
-                        # if there is a valid reasoning pattern, reward it with 1.0. encourage model to produce valid reasoning pattern.
-                        section_penalty["Reasoning Pattern"] = 0.0
-                else:
+            if extracted_data["Reasoning Pattern"]!=None:
+                reasoning_pattern = self.validate_and_preprocess_chain(extracted_data["Reasoning Pattern"])
+                # no valid reasoning pattern, reasoning pattern description will be invalid, so no reward for both reasoning pattern and reasoning pattern
+                if(reasoning_pattern==None):
                     extracted_data["Reasoning Pattern Description"] = None
                     section_penalty["Reasoning Pattern"] = 1.0
-                    reasoning_pattern = None
-            
+                else:
+                    # if there is a valid reasoning pattern, reward it with 1.0. encourage model to produce valid reasoning pattern.
+                    section_penalty["Reasoning Pattern"] = 0.0
             else:
+                extracted_data["Reasoning Pattern Description"] = None
                 section_penalty["Reasoning Pattern"] = 1.0
-
-
+                reasoning_pattern = None
+        
             reward_tokens = torch.zeros(valid_response_length)
             reasoning_pattern_exists = False
 
@@ -474,7 +469,7 @@ def main_task(config):
 
 
     # hot start
-    with open("/export/home2/gohx0043/Curiosity-Driven-GRPO/deepscaler/scripts/data/hot_start.json", "r") as f:
+    with open("/data/projects/13003098/derrick/Curiosity-Driven-GRPO/deepscaler/scripts/data/hot_start.json", "r") as f:
         hot_start_data = json.load(f)
 
     hot_start_data = hot_start_data["0"]

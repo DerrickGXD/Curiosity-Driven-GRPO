@@ -220,6 +220,8 @@ def compute_data_metrics(batch, use_critic=True):
 
     sequence_calculation_reward_tensor = batch.batch['token_level_calculation_reward_tensor']
 
+    total_curiosity_reward_tensor = sequence_reasoning_pattern_reward + sequence_reasoning_pattern_description_reward + sequence_calculation_reward_tensor
+
     metrics = {
         # exploration
         'critic/exploration/total_prompt_with_correct_answer':
@@ -275,6 +277,12 @@ def compute_data_metrics(batch, use_critic=True):
             torch.max(sequence_calculation_reward_tensor).detach().item(),
         'critic/calculation_reward_tensor/min':
             torch.min(sequence_calculation_reward_tensor).detach().item(),
+        'critic/total_curiosity_reward_tensor/mean':
+            torch.mean(total_curiosity_reward_tensor).detach().item(),
+        'critic/total_curiosity_reward_tensor/max':
+            torch.max(total_curiosity_reward_tensor).detach().item(),
+        'critic/total_curiosity_reward_tensor/min':
+            torch.min(total_curiosity_reward_tensor).detach().item(),
         # adv
         'critic/advantages/mean':
             torch.mean(valid_adv).detach().item(),
